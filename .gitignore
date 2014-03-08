@@ -3,6 +3,7 @@ settings.py
 portal/local_settings.py
 portal/settings.py
 portal/data/*
+portal/custom_settings/*
 *.pyc
 *.py~
 */**/*.pyc
