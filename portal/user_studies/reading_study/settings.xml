@@ -1,0 +1,159 @@
+<?xml version="1.0"?>
+
+<study>
+	<name name_stub="reading_study">A Study of Academic Reading Behaviour in Computer Science</name>
+	
+	<description>Digital devices have made great strides in supporting reading. However, many digital technologies have limited support for essential learning activities such as annotation, notetaking and complex navigation. Yet, many students own digital devices and are actively using them to study with. We are investigating the ways in which students read academic materials, the technologies they have decided to use and the problems they encounter while reading.
+	</description>
+
+
+	<informed_consent>
+Any data you provide will be anonymized and it will be impossible to trace it back to you. All data and documents will be kept securely locked at the University of Toronto. The interview data may be kept indefinitely in case we want to further study it. All other data will be destroyed after 5 years. There is no guarantee that you will benefit from your involvement in this study. Your participation is voluntary. You can only answer questions that you are comfortable answering and you can stop your participation for any reason, at any time, without penalty of any sort. Please ask questions if you want more information, are confused, or do not understand something. You can contact Velian (velian@taglab.ca) with any questions or to obtain a copy of the informed consent form. He would be happy to assist you. If you have any concerns about your treatment or rights as a research subject, you may contact the Office of Research Ethics at ethics.review@utoronto.ca or 416-946-3273.
+	</informed_consent>
+	
+	
+	<instructions>The study consists of three stages: filling out an in-person questionnaire (which should take no more than 60 minutes), recording your reading activities over the course of 21 days and participating in a semi-structured hourlong interview at the end of the study period. IF you have any questions please contact Velian Pandeliev at velian@taglab.ca.</instructions>
+	<eligibility>This study is open to all undergraduate and graduate students currently enrolled in a Computer Science program at the University of Toronto. Participants should have normal or corrected-to-normal vision.</eligibility>
+		<reward>Our appreciation for your participating in this study will include an honorarium of up to $120. The amount that you receive will be determined following these rules: $10 for completing the initial survey, $20 for sending us information every day, $40 for sending us detailed information about eleven reading sessions and $30 for completing the in-person interview at the end of the study. If you do not complete the study, you will receive remuneration based on the portion of the study that you completed.</reward>
+		
+	<start_date>2014-03-01</start_date>
+	<end_date>2014-04-30</end_date>
+
+
+	<!-- All users who should be able to administer the study. Investigators
+	CANNOT be participants! -->
+	<investigators>
+		<user name="velian" password="asdf"/>
+	</investigators>
+
+	<!-- 
+		List the directories of all stages in your study here (order is not 
+		important in this section)
+	-->
+	<all_stages>
+		<stage directory="welcome_page" title="First step" description="Welcome to the study! Clicking the button on the right will set the date of your first expected reading report as today's date. Do this when you are prepared to start the study, but no later than the date below."/>
+		<stage directory="simple_task" title="Diary forms" description="Click the button on the right to report a reading session. This is the first day for which we don't have a report from you. "/>
+		<stage directory="bye_page" title="Schedule interview" description="Almost finished! Clicking the button on the right brings up instructions on how to schedule your exit interview and receive your compensation."/>
+	</all_stages>
+
+
+	<!-- One entry for each distinct group in the study -->
+	<all_groups>
+		<group name="groupA">
+			<user name="rs-01"/>
+			<user name="rs-02"/>
+			<user name="rs-03"/>
+			<user name="rs-04"/>
+			<user name="rs-05"/>
+			<user name="rs-06"/>
+			<user name="rs-07"/>
+			<user name="rs-08"/>
+			<user name="rs-09"/>
+			<user name="rs-10"/>
+			<user name="rs-11"/>
+			<user name="rs-12"/>
+			<user name="rs-13"/>
+			<user name="rs-14"/>
+			<user name="rs-15"/>
+			<user name="rs-16"/>
+			<user name="rs-17"/>
+			<user name="rs-18"/>
+			<user name="rs-19"/>
+			<user name="rs-20"/>
+			<user name="rs-21"/>
+			<user name="rs-22"/>
+			<user name="rs-23"/>
+			<user name="rs-24"/>
+			<user name="rs-25"/>
+			<user name="rs-26"/>
+			<user name="rs-27"/>
+			<user name="rs-28"/>
+			<user name="rs-29"/>
+			<user name="rs-30"/>
+			<user name="rs-31"/>
+			<user name="rs-32"/>
+			<user name="rs-33"/>
+			<user name="rs-34"/>
+			<user name="rs-35"/>
+			<user name="rs-36"/>
+			<user name="rs-37"/>
+			<user name="rs-38"/>
+			<user name="rs-39"/>
+			<user name="rs-40"/>
+			<user name="rs-41"/>
+			<user name="rs-42"/>
+			<user name="rs-43"/>
+			<user name="rs-44"/>
+			<user name="rs-45"/>
+			<user name="rs-46"/>
+			<user name="rs-47"/>
+			<user name="rs-48"/>
+			<user name="rs-49"/>
+			<user name="rs-50"/>
+			<user name="rs-51"/>
+			<user name="rs-52"/>
+			<user name="rs-53"/>
+			<user name="rs-54"/>
+			<user name="rs-55"/>
+			<user name="rs-56"/>
+			<user name="rs-57"/>
+			<user name="rs-58"/>
+			<user name="rs-59"/>
+			<user name="rs-60"/>
+			<user name="rs-61"/>
+			<user name="rs-62"/>
+			<user name="rs-63"/>
+			<user name="rs-64"/>
+			<user name="rs-65"/>
+			<user name="rs-66"/>
+			<user name="rs-67"/>
+			<user name="rs-68"/>
+			<user name="rs-69"/>
+			<user name="rs-70"/>
+			<user name="rs-71"/>
+			<user name="rs-72"/>
+			<user name="rs-73"/>
+			<user name="rs-74"/>
+			<user name="rs-75"/>
+			<user name="rs-76"/>
+			<user name="rs-77"/>
+			<user name="rs-78"/>
+			<user name="rs-79"/>
+			<user name="rs-80"/>
+			<user name="rs-81"/>
+			<user name="rs-82"/>
+			<user name="rs-83"/>
+			<user name="rs-84"/>
+			<user name="rs-85"/>
+			<user name="rs-86"/>
+			<user name="rs-87"/>
+			<user name="rs-88"/>
+			<user name="rs-89"/>
+			<user name="rs-test-90"/>
+			<user name="rs-test-91"/>
+			<user name="rs-test-92"/>
+			<user name="rs-test-93"/>
+			<user name="rs-test-94"/>
+			<user name="rs-test-95"/>
+			<user name="rs-test-96"/>
+			<user name="rs-test-97"/>
+			<user name="rs-test-98"/>
+			<user name="rs-test-99"/>
+			
+			<!-- List the stages you want included in this group IN ORDER -->
+			<stages>
+				<stage directory="welcome_page"/>
+				<stage directory="simple_task" times="21"/>
+				<stage directory="bye_page"/>
+			</stages>
+		</group>
+	</all_groups>
+	
+</study>
+
+
+
+
+
+
+

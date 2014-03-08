@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<participants>
+
+	<!-- List all participants you want to add to the study here 
+		 Will probably want to be able to define more info here, and to generate
+		 passwords randomly (or perhaps email them automatically to the users.)
+	-->
+
+		<user name="jim1" password="jim1"/>
+		<user name="jim2" password="jim2"/>
+		<user name="jim3" password="jim3"/>
+		<user name="jim4" password="jim4"/>
+		<user name="jim5" password="jim5"/>
+		
+		<user name="jill1" password="jill1"/>
+		<user name="jill2" password="jill2"/>
+		<user name="jill3" password="jill3"/>
+		<user name="jill4" password="jill4"/>
+		<user name="jill5" password="jill5"/>
+
+</participants>
+
+
+
+
+
+
+

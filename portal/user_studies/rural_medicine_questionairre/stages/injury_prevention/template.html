@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load staticfiles %}
+<script>
+    num_questions = 7
+</script>
+
+<script src="{% static "rural_medicine_questionairre/js/injury_data.js" %}"></script>
+<script src="{% static "rural_medicine_questionairre/js/submit.js" %}"></script>
+<script src="{% static "rural_medicine_questionairre/js/questionairre_builder.js" %}"></script>
+
+<link rel="stylesheet" type="text/css" href="{% static "rural_medicine_questionairre/css/questionairre_style.css" %}">
+
+
+<h1>Injury Prevention and Health Promotion</h1>
+
+
+<form id="shipley_form">
+	<div id="injury_background">
+		<!-- /Background Information -->
+		<div id="study_details">
+			<h2>
+				<a href="" onclick="return toggle_detail('background_info',$(this));" class="right">
+					Background Information
+				</a>
+			</h2>
+
+			<div id='background_info'>
+				<p>
+					Injuries represent a significant portion of mortality and disability worldwide.  Of note, injury 
+					is the leading cause of death among Canadian youth.  In addition to a large negative impact on 
+					health, both intentional and non-intentional injuries have a widespread effect on a community.  
+					These effects include economic costs, such as medical and care expenses and loss of productivity, 
+					and a large social burden from the loss of young lives and family members. 
+				</p>
+				<p>
+				    Rural communities experience a mortality rate from injury that is 3.5 times greater than the general 
+				    Canadian population.  Certain patterns of injury can be related to demographics as children and 
+				    adolescents and elderly persons are frequently over-represented in rural areas.  Still, both groups are 
+				    more likely to be injured than their urban counterparts.  There are many factors in this disparity.  
+    				Road conditions and difficulty maintaining clear roadways, slow-moving industrial machinery in traffic, 
+    				and lower rates of seatbelt use could explain the higher incidence of motor vehicle accidents.  Older 
+    				construction and difficulty heating homes may lead to more residential fires.  A greater proportion of 
+    				community members involved in occupational hazards contribute to industrial and agricultural accidents.  
+    				Also, the length of discovery and transport from site of injury can lead to delays receiving specialized 
+    				emergency care.
+				</p>
+			</div>
+		</div>
+		<!-- /Background Information -->
+
+		<!-- References -->
+		<div id="study_details">
+			<h2>
+				<a href="" onclick="return toggle_detail('goals',$(this));" class="right">
+				Goals
+				</a>
+			</h2>
+
+			<div id='goals' style="display:none;">
+				<ul>
+					 <li>Prevention of motor vehicle accidents</li>
+					 <li>Prevention of residential fires</li>
+					 <li>Prevention of workplace and industrial injuries</li>
+					 <li>Reduction in delays in accessing emergency care</li>
+					 <li>Suicide prevention for youth</li>
+					 <li>Falls prevention for the elderly</li>
+			
+				</ul>
+			</div>
+		</div>
+		<!-- /References -->
+
+
+		<!-- Goals -->
+		<div id="study_details">
+			<h2>
+				<a href="" onclick="return toggle_detail('references',$(this));" class="right">
+				References
+				</a>
+			</h2>
+
+			<div id='references' style="display:none;">
+				<ul>
+
+					<li>de Ramirez, S. Hyder, A., Herbert, H., & Stevens, K. (2012). <em>Unintentional injuries: Magnitude, prevention, and control.</em> Annual Review of Public Health, 33, p 175 – 191.</li>
+
+					<li>Jong, M. (n.d.). <em>Where there are no doctors.</em> [PDF document]. Retrieved from:   http://www.cfhi-fcass.ca/Libraries/Picking_up_the_pace_files/Micheal_Jong.sflb.ashx</li>
+
+					<li>Laurent, S. (2002). Rural Canada: <em>Access to healthcare.</em> [online publication]. Retrieved from: http://publications.gc.ca/Collection-R/LoPBdP/BP/prb0245-e.htm</li>
+
+					<li>Statistics Canada (2011). <em>Suicide rates: An overview.</em> (Catalogue number 82-624-X). Retrieved from: http://www.statcan.gc.ca/pub/82-624-x/2011001/article/11506-
+					eng.htm</li>
+
+					<li>Peek-Asa, C., Zwerling, C., & Stallones, L. (2004). <em>Acute traumatic injuries in rural populations.</em> American Journal of Public Health, 94(10), p1689 – 1693.</li>
+				</ul>
+			</div>
+		</div>
+		<!-- /Goals -->
+		<br>
+		<center>
+			<div style="margin:0 0 100px 0;" id="submit_box">
+				<div id="goto_questions_container">
+					<a style="color:blue;" href="#" onclick="go_to_survey();">
+						<span class="actbutton green" style="width:200px;padding: 10px;">
+							Show Survey
+						</span>
+					</a>
+				</div>
+		</center>
+		
+	</div> <!--/Injury background-->
+
+	
+	<div id="injury_questions">
+		
+			<!-- Write the questions -->
+			<script>
+				for (var i=0; i<injury_questions.length; i++)
+				{
+						write_question(i, injury_questions[i], injury_rationale[i]);
+				}
+			</script>
+	
+			<br><br>
+			
+			<center>
+				<div style="margin:0 0 100px 0;" id="submit_box">
+					<div id="submit_container">
+						<a style="color:blue;" href="#" onclick="submit_data();">
+							<span class="actbutton green" style="width:200px;padding: 10px;">
+								   Submit Answers
+							</span>
+						</a>
+					</div>
+					<div style="display:none;" id="waiting_container">
+						Request submitted... please wait.
+					</div>
+					<div style="display:none;" id="retry_container">
+						Submit failed. Please click <a style="color:blue;" href="#" onclick="submit_data();">here</a> 
+						to try again.
+					</div>
+				</div>
+			</center>
+	
+		</div>
+	</div> <!--/Injury Questions-->
+
+
+	
+</form>
+
+<br>
+
+
+
+{% endblock %}
+
+

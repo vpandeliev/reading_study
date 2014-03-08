@@ -1,0 +1,497 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load staticfiles %}
+
+<script>
+//Used to validate required field responses
+    num_questions = 4
+</script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="{{ MEDIA_URL }}js/jquery.mobile-1.4.2.css">
+<script src="{{ MEDIA_URL }}js/jquery.mobile-1.4.2.min.js"></script>
+<script src="{{ MEDIA_URL }}reading_study/js/submit.js"></script>
+<script src="{{ MEDIA_URL }}reading_study/js/table_builder.js"></script>
+<script>
+function cbChanged(checkboxElem, name) {
+  //if (checkboxElem.checked) {
+    	$('#'+name).toggle();
+		$('#'+name).val('');
+  //} else {
+    // Do something else
+  }
+function docOtherChanged(radioElem){
+	if (radioElem.value != '0'){
+		$('#docother').show();
+	}
+	else {
+		$('#docother').hide();
+		$('#docother').val('');
+	}
+		
+}
+function pre_buttons(){
+	$('#submit_box').show();
+	$('#pre-submit').prop("checked", false).checkboxradio("refresh");
+	$('#submit').hide();
+	if ($('#willreport').is(":checked")) {
+		$('#not_reporting').hide();
+		$('#reading_questions').show();
+	}
+	else if ($('#cannotreport').is(":checked")) {
+		$('#reading_questions').hide();
+		$('#not_reporting').show();
+
+	}
+	else if ($('#noread').is(":checked") || $('#reportedonpaper').is(":checked")) {
+		$('#not_reporting').hide();
+		$('#reading_questions').hide();
+		
+	}
+	
+}
+
+</script>
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}reading_study/css/questionairre_style.css">
+	<h3>You have provided data for {{ current_stage.stage_times_completed }} of the 21 days of the study and submitted {{ current_stage.sessions_completed }} reading diary form{{ current_stage.sessions_completed|pluralize }}.</h3>
+	
+	<form enctype="multipart/form-data" action="#" method="post"> 
+		{% csrf_token %}
+		<h1>Here is our csrf {{csrf_token}}</h1>
+		<input type="file" id="grade_csv" name="image"/>
+	  	<input type="submit" value="Submit"/>
+	</form>
+<!-->	
+	{% if current_stage.future_session %}
+	<h1>Diary reporting up to date.</h1>
+	<h4>Good job! You have reported your reading activities for every day so far, including today. </h4><h4>You may continue reporting your reading sessions tomorrow. </h4><h4>You have {{ current_stage.days_remaining }} days left to report, up to and including {{ current_stage.expected_end_date|date:"l F jS " }}.</h4>
+	<div style='text-align:center;'> 
+		<img src="{{ MEDIA_URL }}reading_study/img/kitten.jpg" />
+		</div>
+	{% else %}
+	
+	
+	
+	<h1>Diary entry for {{current_stage.date_from_session_number|date:"l F jS "}}</h1>
+	
+	<form id="diary_form" method="post" action="#" onsubmit="submit_data();">
+		<input type="hidden" name="date_of_entry" value="{{ current_stage.date_from_session_number|date:"d.m.Y"}}">
+
+		<div id="pre_questions">
+			<p>Please select an option below:
+				<fieldset class="ui-field-contain">
+
+				      <label for="willreport">I <b>read</b> on {{current_stage.date_from_session_number|date:"F jS"}} and I would like to report my reading.</label>
+				      <input type="radio" name="didyouread" id="willreport" value="willreport" onclick="pre_buttons();">
+					  <label for="reportedonpaper">I <b>read</b> on {{current_stage.date_from_session_number|date:"F jS"}} and I have filled out a paper diary form.</label>
+				      <input type="radio" name="didyouread" id="reportedonpaper" value="reportedonpaper" onclick="pre_buttons();">
+					  <label for="cannotreport">I <b>read</b> on {{current_stage.date_from_session_number|date:"F jS"}} and I do not wish to report my reading.</label>
+				      <input type="radio" name="didyouread" id="cannotreport" value="cannotreport" onclick="pre_buttons();">
+			      <label for="noread">I <b>did not read</b> on {{current_stage.date_from_session_number|date:"F jS"}}</label>
+			      <input type="radio" name="didyouread" id="noread" value="noread" onclick="pre_buttons();">
+
+				</fieldset>
+		</div>
+		<div id="not_reporting" style="display:none;">
+
+		<label for="excuse">If you can, briefly describe your reasons for NOT reporting your reading:</label>
+		<textarea name="excuse" id="excuse"></textarea>
+		</div>
+		
+		
+		
+		
+		<div id="reading_questions" style="display:none;">
+			
+				<div class="ui-field-contain">
+					
+					<fieldset class="ui-field-contain">
+				    <label for="start_time">What time of day did this session begin?</label>
+				    <select name="start_time" id="start_time">
+				      <option value="em">Early morning (6 - 9 am)</option>
+				      <option value="lm">Late morning (9 am - noon)</option>
+				      <option value="ea">Early afternoon (noon - 3 pm)</option>
+				      <option value="la">Late afternoon (3 - 6 pm)</option>
+				      <option value="ee">Early evening (6 - 9 pm)</option>
+				      <option value="ee">Late evening (9 pm - midnight)</option>
+				      <option value="en">After midnight (midnight - 3 am)</option>
+				      <option value="ln">Before dawn (3 - 6 am)</option>
+				    </select>
+				</fieldset>
+					<fieldset class="ui-field-contain">
+					<label for="duration">How long did the session last, in minutes?</label>
+					  <input type="range" name="duration" id="duration" value="10" min="10" step="10" max="120">
+				  </fieldset>
+					<fieldset class="ui-field-contain">
+					<label for="break">How much time, in minutes, did you spend on non-reading activities (e.g., writing, taking a break)?</label>
+					  <input type="range" name="break" id="break" value="10" min="10" step="10" max="120">
+				  </fieldset>
+				  <fieldset>
+					  <label for="location">Where did this session take place?</label>
+					  <input type="text" name="location" id="location" placeholder="(e.g., office desk, living room, coffee shop)">
+
+					  <label for="goal">Please state the main goal of this session.</label>
+					<textarea name="goal" id="goal"></textarea>
+
+
+					<label for="layout">Please describe your reading layout!!!!!!!!!</label>
+					<textarea name="layout" id="layout"></textarea>
+					<label for="comments">Do you have any comments about how the reading session went? Were there any moments when you felt frustrated or unable to accomplish a task? What happened?</label>
+					<textarea name="comments" id="comments"></textarea>
+					</fieldset>
+				
+					<br/><h3>Reading and documents</h3>
+
+					<fieldset data-role="controlgroup">
+				    <legend>I was reading for the purposes of (tick all that apply):</legend>
+				      <label for="und">Understanding lectures or course material</label>
+				      <input type="checkbox" name="purpose_und" id="und" value="1">
+				      <label for="disc">Preparing for a class or discussion</label>
+				      <input type="checkbox" name="purpose_disc" id="disc" value="1">
+					<label for="test">Preparing for a test</label>
+				      <input type="checkbox" name="purpose_test" id="test" value="1">
+					<label for="review">Critically reviewing article(s)/document(s)</label>
+				      <input type="checkbox" name="purpose_review" id="review" value="1">
+					<label for="notes">Creating study notes to consult in the future</label>
+				      <input type="checkbox" name="purpose_notes" id="notes" value="1">
+					<label for="rx">Researching for a paper or presentation</label>
+				      <input type="checkbox" name="purpose_rx" id="rx" value="1">
+					<label for="proof">Proof-reading document(s)</label>
+				      <input type="checkbox" name="purpose_proof" id="proof" value="1">
+					<label for="back">Acquiring general or background knowledge on an academic topic</label>
+				      <input type="checkbox" name="purpose_back" id="back" value="1">
+					<label for="purpose_other">Other:</label>
+				      <input type="checkbox" name="purpose_other" id="purpose_other" value="1" onClick="cbChanged(this, 'purpose_other_describe');">
+					  <input style="display:none;" type="text" name="purpose_other_describe" id="purpose_other_describe" placeholder="(e.g., entertainment)">
+				  </fieldset>
+					
+					<fieldset data-role="controlgroup">
+				    <legend>During this session, I used the following devices/technologies to read	 (tick all that apply):</legend>
+				      <label for="book">Bound printed paper (e.g., book or coursepack)</label>
+				      <input type="checkbox" name="tech_book" id="book" value="1">
+				      <label for="printout">Loose or stapled printed paper (e.g., printout)</label>
+				      <input type="checkbox" name="tech_printout" id="printout" value="1">
+				      <label for="handwritten">Handwritten paper (e.g., notes/notebook)</label>
+				      <input type="checkbox" name="tech_handwritten" id="handwritten" value="1">
+				      <label for="desktop">Desktop computer</label>
+				      <input type="checkbox" name="tech_desktop" id="desktop" value="1">
+				      <label for="laptop">Laptop computer</label>
+				      <input type="checkbox" name="tech_laptop" id="laptop" value="1">
+				      <label for="detachable">Laptop with detachable screen (e.g., Asus Transformer)</label>
+				      <input type="checkbox" name="tech_detachable" id="detachable" value="1">
+				      <label for="tablet_lg">Large tablet (8 - 11")</label>
+				      <input type="checkbox" name="tech_tablet_lg" id="tablet_lg" value="1">
+				      <label for="tablet_sm">Small tablet (&lt; 8")</label>
+				      <input type="checkbox" name="tech_tablet_sm" id="tablet_sm" value="1">
+				      <label for="stylus">Stylus-enabled laptop/tablet (e.g., Microsoft Surface Pro)</label>
+				      <input type="checkbox" name="tech_stylus" id="stylus" value="1">
+				      <label for="smartphone">Smartphone</label>
+				      <input type="checkbox" name="tech_smartphone" id="smartphone" value="1">
+				      <label for="ereader">E-ink reading device (e.g., Kobo Touch)</label>
+				      <input type="checkbox" name="tech_ereader" id="ereader" value="1">
+				      <label for="lcdreader">LCD reading device (e.g., Kindle Fire)</label>
+				      <input type="checkbox" name="tech_lcdreader" id="lcdreader" value="1">
+
+
+
+					<label for="tech_other">Other:</label>
+				      <input type="checkbox" name="tech_other" id="tech_other" value="1" onClick="cbChanged(this, 'tech_other_describe');">
+					  <input style="display:none;" type="text" name="tech_other_describe" id="tech_other_describe" placeholder="(e.g., vellum)">
+				  </fieldset>
+			
+			<p>Over the course of the reading session, I read from the following documents:</p> 
+			
+		<div style="padding-top:20px">
+
+			<fieldset data-role="controlgroup" data-type="horizontal">
+			<legend>Academic articles</legend>
+			<label for=article-0>No documents</label>
+			<input type="radio" name="doctype_article" id="article-0" value="0" checked>
+			<label for=article-1>1 document</label>
+			<input type="radio" name="doctype_article" id="article-1" value="1" >
+			<label for=article-24>2-4 documents</label>
+			<input type="radio" name="doctype_article" id="article-24" value="2" >
+			<label for=article-510>5-10 documents</label>
+			<input type="radio" name="doctype_article" id="article-510" value="5" >
+			<label for=article-11>11+ documents</label>
+			<input type="radio" name="doctype_article" id="article-11" value="11" >
+			</fieldset>
+			</div>
+			<div style="padding-top:20px">
+			
+			<fieldset data-role="controlgroup" data-type="horizontal">
+			<legend>Book or book chapters (incl. textbook)</legend>
+			<label for=book-0>No documents</label>
+			<input type="radio" name="doctype_book" id="book-0" value="0" checked>
+			<label for=book-1>1 document</label>
+			<input type="radio" name="doctype_book" id="book-1" value="1" >
+			<label for=book-24>2-4 documents</label>
+			<input type="radio" name="doctype_book" id="book-24" value="2" >
+			<label for=book-510>5-10 documents</label>
+			<input type="radio" name="doctype_book" id="book-510" value="5" >
+			<label for=book-11>11+ documents</label>
+			<input type="radio" name="doctype_book" id="book-11" value="11" >
+			</fieldset>
+			</div>
+			<div style="padding-top:20px">
+			
+			<fieldset data-role="controlgroup" data-type="horizontal">
+			<legend>Lecture slides</legend>
+			<label for=slides-0>No documents</label>
+			<input type="radio" name="doctype_slides" id="slides-0" value="0" checked>
+			<label for=slides-1>1 document</label>
+			<input type="radio" name="doctype_slides" id="slides-1" value="1" >
+			<label for=slides-24>2-4 documents</label>
+			<input type="radio" name="doctype_slides" id="slides-24" value="2" >
+			<label for=slides-510>5-10 documents</label>
+			<input type="radio" name="doctype_slides" id="slides-510" value="5" >
+			<label for=slides-11>11+ documents</label>
+			<input type="radio" name="doctype_slides" id="slides-11" value="11" >
+			</fieldset>
+			</div>
+			<div style="padding-top:20px">
+			
+			<fieldset data-role="controlgroup" data-type="horizontal">
+			<legend>My own notes</legend>
+			<label for=mynotes-0>No documents</label>
+			<input type="radio" name="doctype_mynotes" id="mynotes-0" value="0" checked>
+			<label for=mynotes-1>1 document</label>
+			<input type="radio" name="doctype_mynotes" id="mynotes-1" value="1" >
+			<label for=mynotes-24>2-4 documents</label>
+			<input type="radio" name="doctype_mynotes" id="mynotes-24" value="2" >
+			<label for=mynotes-510>5-10 documents</label>
+			<input type="radio" name="doctype_mynotes" id="mynotes-510" value="5" >
+			<label for=mynotes-11>11+ documents</label>
+			<input type="radio" name="doctype_mynotes" id="mynotes-11" value="11" >
+			</fieldset>
+			</div>
+			<div style="padding-top:20px">
+			
+			<fieldset data-role="controlgroup" data-type="horizontal">
+			<legend>Someone else's notes</legend>
+			<label for=othernotes-0>No documents</label>
+			<input type="radio" name="doctype_othernotes" id="othernotes-0" value="0" checked>
+			<label for=othernotes-1>1 document</label>
+			<input type="radio" name="doctype_othernotes" id="othernotes-1" value="1" >
+			<label for=othernotes-24>2-4 documents</label>
+			<input type="radio" name="doctype_othernotes" id="othernotes-24" value="2" >
+			<label for=othernotes-510>5-10 documents</label>
+			<input type="radio" name="doctype_othernotes" id="othernotes-510" value="5" >
+			<label for=othernotes-11>11+ documents</label>
+			<input type="radio" name="doctype_othernotes" id="othernotes-11" value="11" >
+			</fieldset>
+			</div>
+			<div style="padding-top:20px">
+			<fieldset data-role="controlgroup" data-type="horizontal">
+			<legend>Encyclopedic articles</legend>
+			<label for=encyclopedia-0>No documents</label>
+			<input type="radio" name="doctype_encyclopedia" id="encyclopedia-0" value="0" checked>
+			<label for=encyclopedia-1>1 document</label>
+			<input type="radio" name="doctype_encyclopedia" id="encyclopedia-1" value="1" >
+			<label for=encyclopedia-24>2-4 documents</label>
+			<input type="radio" name="doctype_encyclopedia" id="encyclopedia-24" value="2" >
+			<label for=encyclopedia-510>5-10 documents</label>
+			<input type="radio" name="doctype_encyclopedia" id="encyclopedia-510" value="5" >
+			<label for=encyclopedia-11>11+ documents</label>
+			<input type="radio" name="doctype_encyclopedia" id="encyclopedia-11" value="11" >
+			</fieldset>
+		</div>
+			<div style="padding-top:30px">
+			<fieldset data-role="controlgroup" data-type="horizontal">
+			<legend>Questions and answers (e.g., forum or discussion board)</legend>
+			<label for=qa-0>No documents</label>
+			<input type="radio" name="doctype_qa" id="qa-0" value="0" checked>
+			<label for=qa-1>1 document</label>
+			<input type="radio" name="doctype_qa" id="qa-1" value="1" >
+			<label for=qa-24>2-4 documents</label>
+			<input type="radio" name="doctype_qa" id="qa-24" value="2" >
+			<label for=qa-510>5-10 documents</label>
+			<input type="radio" name="doctype_qa" id="qa-510" value="5" >
+			<label for=qa-11>11+ documents</label>
+			<input type="radio" name="doctype_qa" id="qa-11" value="11" >
+			</fieldset>
+		</div>
+		<div style="padding-top:20px">
+
+			<fieldset data-role="controlgroup" data-type="horizontal">
+			<legend>Step-by-step procedures (e.g., assignment handout)</legend>
+			<label for=procedure-0>No documents</label>
+			<input type="radio" name="doctype_procedure" id="procedure-0" value="0" checked>
+			<label for=procedure-1>1 document</label>
+			<input type="radio" name="doctype_procedure" id="procedure-1" value="1" >
+			<label for=procedure-24>2-4 documents</label>
+			<input type="radio" name="doctype_procedure" id="procedure-24" value="2" >
+			<label for=procedure-510>5-10 documents</label>
+			<input type="radio" name="doctype_procedure" id="procedure-510" value="5" >
+			<label for=procedure-11>11+ documents</label>
+			<input type="radio" name="doctype_procedure" id="procedure-11" value="11" >
+			</fieldset>
+		</div>
+		<div style="padding-top:20px">
+			<fieldset data-role="controlgroup" data-type="horizontal">
+			<legend>Scholarly or library records</legend>
+			<label for=record-0>No documents</label>
+			<input type="radio" name="doctype_record" id="record-0" value="0" checked>
+			<label for=record-1>1 document</label>
+			<input type="radio" name="doctype_record" id="record-1" value="1" >
+			<label for=record-24>2-4 documents</label>
+			<input type="radio" name="doctype_record" id="record-24" value="2" >
+			<label for=record-510>5-10 documents</label>
+			<input type="radio" name="doctype_record" id="record-510" value="5" >
+			<label for=record-11>11+ documents</label>
+			<input type="radio" name="doctype_record" id="record-11" value="11" >
+			</fieldset>
+		</div>
+		<div style="padding-top:20px">
+			<fieldset data-role="controlgroup" data-type="horizontal">
+			<legend>Programming code</legend>
+			<label for=code-0>No documents</label>
+			<input type="radio" name="doctype_code" id="code-0" value="0" checked>
+			<label for=code-1>1 document</label>
+			<input type="radio" name="doctype_code" id="code-1" value="1" >
+			<label for=code-24>2-4 documents</label>
+			<input type="radio" name="doctype_code" id="code-24" value="2" >
+			<label for=code-510>5-10 documents</label>
+			<input type="radio" name="doctype_code" id="code-510" value="5" >
+			<label for=code-11>11+ documents</label>
+			<input type="radio" name="doctype_code" id="code-11" value="11" >
+			</fieldset>
+		</div>
+		<div style="padding-top:20px">
+			<fieldset data-role="controlgroup" data-type="horizontal">
+			<legend>Other (please describe below)</legend>
+			<label for=other-0>No documents</label>
+			<input type="radio" name="doctype_other" id="other-0" value="0" checked onclick="docOtherChanged(this);">
+			<label for=other-1>1 document</label>
+			<input type="radio" name="doctype_other" id="other-1" value="1" onclick="docOtherChanged(this);">
+			<label for=other-24>2-4 documents</label>
+			<input type="radio" name="doctype_other" id="other-24" value="2" onclick="docOtherChanged(this);">
+			<label for=other-510>5-10 documents</label>
+			<input type="radio" name="doctype_other" id="other-510" value="5" onclick="docOtherChanged(this);">
+			<label for=other-11>11+ documents</label>
+			<input type="radio" name="doctype_other" id="other-11" value="11" onclick="docOtherChanged(this);">
+			</fieldset>		
+					
+		</div>
+ <input style="display:none;" type="text" name="doctype_other_describe" id="docother" placeholder="(e.g., newspaper article)">
+
+
+
+
+
+			
+
+			
+			
+				<br/><br/><h3>Related activities</h3>
+
+<fieldset data-role="controlgroup">
+<legend>While reading, I was also (tick all that apply):</legend>
+<label for="annotation">Making notes or markings (e.g., underlining or highlighting) on the document(s) I was reading.</label>
+<input type="checkbox" name="act_annotation" id="annotation" value="1">
+<label for="notes">Creating study notes or summarizing the document(s) in a separate place.</label>
+<input type="checkbox" name="act_notes" id="notes" value="1">
+<label for="composition">Composing (writing) new documents.</label>
+<input type="checkbox" name="act_composition" id="composition" value="1">
+<label for="verbatim">Extracting passages verbatim from the document.</label>
+<input type="checkbox" name="act_verbatim" id="verbatim" value="1">
+<label for="audio_related">Listening to related audio (e.g., lecture recordings).</label>
+<input type="checkbox" name="act_audio_related" id="audio_related" value="1">
+<label for="audio_unrelated">Listening to unrelated audio (e.g., music).</label>
+<input type="checkbox" name="act_audio_unrelated" id="audio_unrelated" value="1">
+<label for="video_related">Watching related video (e.g., lecture recordings).</label>
+<input type="checkbox" name="act_video_related" id="video_related" value="1">
+<label for="video_unrelated">Watching unrelated video (e.g., TV program or film)</label>
+<input type="checkbox" name="act_video_unrelated" id="video_unrelated" value="1">
+
+<label for="talk_related">Talking to one or more people about the subject matter.</label>
+<input type="checkbox" name="act_talk_related" id="talk_related" value="1">
+<label for="talk_unrelated">Talking to one or more people about non-related things.</label>
+<input type="checkbox" name="act_talk_unrelated" id="talk_unrelated" value="1">
+
+
+
+				<label for="act_other">Other:</label>
+			      <input type="checkbox" name="act_other" id="act_other" value="1" onClick="cbChanged(this, 'act_other_describe');">
+				  <input style="display:none;" type="text" name="act_other_describe" id="act_other_describe" placeholder="(e.g., receiving a massage)">
+			  </fieldset>
+			
+
+
+
+
+			<fieldset data-role="controlgroup">
+			<legend>During or after the session, I (tick all that apply):</legend>
+<label for="digital_to_paper">Printed out digital documents.</label>
+<input type="checkbox" name="mgmt_digital_to_paper" id="digital_to_paper" value="1">
+<label for="paper_to_paper">Photocopied paper documents.</label>
+<input type="checkbox" name="mgmt_paper_to_paper" id="paper_to_paper" value="1">
+<label for="paper_to_digital">Scanned or digitized paper documents.</label>
+<input type="checkbox" name="mgmt_paper_to_digital" id="paper_to_digital" value="1">
+<label for="digital_storage">Saved digital documents to a hard drive or cloud service.</label>
+<input type="checkbox" name="mgmt_digital_storage" id="digital_storage" value="1">
+<label for="paper_storage">Filed or stored paper documents so I could find them later.</label>
+<input type="checkbox" name="mgmt_paper_storage" id="paper_storage" value="1">
+<label for="reference">Saved reference, URLs or descriptions of documents in order to find them again in the future.</label>
+<input type="checkbox" name="mgmt_reference" id="reference" value="1">
+<label for="borrow">Read from documents that I did not own (e.g. library books).</label>
+<input type="checkbox" name="mgmt_borrow" id="borrow" value="1">
+<label for="digital_annotation">Saved digital documents that included content generated during this session (e.g., annotations, highlighting, notes).</label>
+<input type="checkbox" name="mgmt_digital_annotation" id="digital_annotation" value="1">
+<label for="paper_annotation">Filed or retained paper documents that included content generated during this session (e.g., annotations, highlighting, notes).</label>
+<input type="checkbox" name="mgmt_paper_annotation" id="paper_annotation" value="1">
+			</fieldset>
+
+
+
+			</div>
+						</div>
+			</form>
+			
+			
+			
+			
+			
+			
+			
+			
+				<br><br>
+				
+				<center>
+					<div style="margin:0 0 50px 0; display: none;" id="submit_box">
+						<div id="pre_submit">
+							<label for="pre-submit" style="color:#007700;">Ready to submit...</label>
+						      
+						<input type="checkbox" name="submission" id="pre-submit" value="pre-submit" onClick="cbChanged(this,'submit');">
+
+						</div>
+						<div style="display:none;" id="submit">
+							<a class="ui-btn" href="#" onclick="submit_data();">Go!</a>
+						</div>
+						
+						<div style="display:none;" id="waiting_container">
+							Request submitted... please wait.
+						</div>
+						<div style="display:none;" id="retry_container">
+							Submit failed. Please click <a style="color:blue;" href="#" onclick="submit_data();">here</a> 
+							to try again.
+						</div>
+					</div>
+				</center>
+		
+
+		</div> 
+
+
+		
+	</form>
+
+	<br>
+	
+{% endif %}
+-->
+{% endblock %}
+
+

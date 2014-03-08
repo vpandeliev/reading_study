@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+
+<study>
+	<name name_stub="rmq">rural_medicine_questionairre</name>
+	
+	<description>An example using the Shipley Vocabulary Test</description>
+	<informed_consent>Do you wish to be tested?</informed_consent>
+	<instructions>
+		In the following survery, you will see a word in capital letters for 
+		each question. Underneath there are four other words. Select the one word
+		 which means the same thing, or most nearly the same thing as the first 
+		word. If you don't know, guess.
+	</instructions>
+	<eligibility>Everyone.</eligibility>
+	<reward>None.</reward>
+
+	<start_date>2002-09-24</start_date>
+	<end_date>2012-12-12</end_date>
+
+	<!-- All users who should be able to administer the study. Investigators
+	CANNOT be participants! -->
+	<investigators>
+		<user name="kante" password="temp1234"/>
+		<user name="natalie" password="temp1234"/>
+		<user name="yasmin" password="temp1234"/>
+		<user name="dr_d"	password="dr_d"/>
+	</investigators>
+
+	<!-- 
+		List the directories of all stages in your study here (order is not 
+		important in this section)
+	-->
+	<all_stages>
+
+		<stage directory="injury_prevention"/>
+		<stage directory="housing"/>
+		
+		<stage directory="results"/>
+		
+	</all_stages>
+
+
+	<!-- One entry for each distinct group in the study -->
+	<all_groups>
+		<group name="everyone">
+			<user name="jim1"/>
+			<user name="jill1"/>
+			<user name="jim2"/>
+			<user name="jill2"/>
+			<user name="jim3"/>
+			<user name="jill3"/>
+			<user name="jim4"/>
+			<user name="jill4"/>
+			<user name="jim5"/>
+			<user name="jill5"/>
+			<!-- List the stages you want included in this group IN ORDER -->
+			<stages>
+				<stage directory="injury_prevention"/>
+				<stage directory="housing"/>
+				<stage directory="results"/>
+				
+			</stages>
+		</group>
+	</all_groups>
+	
+</study>
+
+
+
+
+
+
+

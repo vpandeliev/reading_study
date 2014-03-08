@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load staticfiles %}
+
+<script>
+    num_questions = 4
+</script>
+
+<script src="{% static "rural_medicine_questionairre/js/housing_data.js" %}"></script>
+<script src="{% static "rural_medicine_questionairre/js/submit.js" %}"></script>
+<script src="{% static "rural_medicine_questionairre/js/questionairre_builder.js" %}"></script>
+
+<link rel="stylesheet" type="text/css" href="{% static "rural_medicine_questionairre/css/questionairre_style.css" %}">
+
+	
+	<h1>Injury Prevention and Health Promotion</h1>
+	
+	
+	<form id="shipley_form">
+
+		<div id="injury_background">
+			<!-- /Background Information -->
+			<div id="study_details">
+				<h2>
+					<a href="" onclick="return toggle_detail('background_info',$(this));" class="right">
+						Background Information
+					</a>
+				</h2>
+
+				<div id='background_info'>
+					<p>
+						The quality and sustainability of homes has one of the most significant impacts on an individual’s and overall community’s wellbeing.   Homes can contain many dangers.  Improper or aging construction can cause injuries and accidents.  Indoor irritants like mould on building materials or nitrogen dioxide from stoves and space heaters can aggravate allergies and contribute to respiratory diseases.  Radon exposure from ground underneath homes can cause lung cancers.  Crowded housing with multiple people sharing a small space facilitates the spread of infectious disease.  In contrast, well constructed and maintained homes promotes good health and prevents infectious and chronic disease.  Having access and the ability to rely on such also decreases stress and anxiety.  This is especially important during times of crisis or emergency.  For example, intimate partner violence cannot be addressed without providing a safe alternative to the home setting.  Natural disasters, such as floods, fires, and storms , present an immediate danger unless safe shelter can be found.
+					</p>
+					<p>
+					Financial security has a “chicken-egg” relationship with housing security.  Reasonable costs for secure housing is critical: safe homes cannot be obtained unless they can be afforded.   Poverty is a principle cause for homelessness and overcrowded or dangerous homes.  Further, as a primary need, income used for housing can compete with other primary needs, such as food and clothing, or replace money that could be spent on less acute needs, including transportation, medication, insurance, or savings. 
+					</p>
+				</div>
+			</div>
+			<!-- /Background Information -->
+
+			<!-- References -->
+			<div id="study_details">
+				<h2>
+					<a href="" onclick="return toggle_detail('goals',$(this));" class="right">
+					Goals
+					</a>
+				</h2>
+
+				<div id='goals' style="display:none;">
+					<ul>
+						 <li>Secure and anonymous location for women’s shelter</li>
+						 <li>Provision of smoke alarms and carbon monoxide receptors to community members</li>
+						 <li>Municipal services or service agencies to provide subsidized snow clearance and salt driveways</li>
+					</ul>
+				</div>
+			</div>
+			<!-- /References -->
+
+
+			<!-- Goals -->
+			<div id="study_details">
+				<h2>
+					<a href="" onclick="return toggle_detail('references',$(this));" class="right">
+					References
+					</a>
+				</h2>
+
+				<div id='references' style="display:none;">
+					<ul>
+
+						<li>Bartfeld, J., & Dunifon, R. (2005). <em>State-level predictors of food insecurity and hunger among households with children.</em> [PDF document]. Retrieved from: http://www.ers.usda.gov/Publications/CCR13/ccr13.pdf.</li>
+
+						<li>Bashir S. (2002).  <em>Home is where the harm is: inadequate housing as a public health crisis.</em> American Journal of Public Health, 92(5), p733-738.</li>
+
+						<li>Health Canada. (2012). <em>It’s your health: Radon.</em> Ottawa, ON: Health Canada.</li>
+
+						<li>Marcouiller, D., Lapping, M., & Furuseth, O. (Eds.). (2011). <em>Rural housing, exurbanization, and amenity driven development: Contrasting the “haves” and the “have-nots”</em>. Burlington, VT: Ashgate Publishing Company.</li>
+
+						<li>World Health Organization. (2012). <em>Environmental health inequalities in Europe.</em> Copenhagen, Denmark: World Health Organization.</li>
+					</ul>
+				</div>
+			</div>
+			<!-- /Goals -->
+			<br>
+			<center>
+				<div style="margin:0 0 100px 0;" id="submit_box">
+					<div id="goto_questions_container">
+						<a style="color:blue;" href="#" onclick="go_to_survey();">
+							<span class="actbutton green" style="width:200px;padding: 10px;">
+								Show Survey
+							</span>
+						</a>
+					</div>
+			</center>
+			
+		</div> <!--/Injury background-->
+
+		
+		<div id="injury_questions">
+			
+				<!-- Write the questions -->
+				<script>
+					for (var i=0; i<housing_questions.length; i++)
+					{
+							write_question(i, housing_questions[i], housing_rationale[i]);
+					}
+				</script>
+		
+				<br><br>
+				
+				<center>
+					<div style="margin:0 0 100px 0;" id="submit_box">
+						<div id="submit_container">
+							<a style="color:blue;" href="#" onclick="submit_data();">
+								<span class="actbutton green" style="width:200px;padding: 10px;">
+									   Submit Answers
+								</span>
+							</a>
+						</div>
+						<div style="display:none;" id="waiting_container">
+							Request submitted... please wait.
+						</div>
+						<div style="display:none;" id="retry_container">
+							Submit failed. Please click <a style="color:blue;" href="#" onclick="submit_data();">here</a> 
+							to try again.
+						</div>
+					</div>
+				</center>
+		
+			</div>
+		</div> <!--/Injury Questions-->
+
+
+		
+	</form>
+
+	<br>
+	
+
+
+{% endblock %}
+
+

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load staticfiles %}
+<script src="{% static "rural_medicine_questionairre/js/injury_data.js" %}"></script>
+<script src="{% static "rural_medicine_questionairre/js/housing_data.js" %}"></script>
+<script src="{% static "rural_medicine_questionairre/js/results_builder.js" %}"></script>
+
+<link rel="stylesheet" type="text/css" href="{% static "rural_medicine_questionairre/css/results_style.css" %}">
+
+
+
+<h1>Your Results</h1>
+
+
+<div id="loading_box">
+    GENERATING YOUR RESULTS... PLEASE WAIT...
+</div>
+
+
+<!-- Tabs for viewing users in each study separately -->
+<div id="supertabs">
+    <ul>
+        <li class="tablink on" id="tab1">
+            Injury Prevention and Health Promotion
+        </li>
+        
+        <li class="tablink" id="tab2">
+            Affordable and Secure Housing
+        </li>
+    </ul>
+</div>
+
+
+<div id="tab1box" class="tab">
+    <!-- This is populated in the results_builder.js script-->
+</div>
+<div id="tab2box" class="tab" style="display:none">
+    <!-- This is populated in the results_builder.js script-->
+</div>
+
+
+
+{% endblock %}
+
+
