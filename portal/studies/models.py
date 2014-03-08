@@ -88,6 +88,7 @@ class StudyParticipant(models.Model):
 class Stage(models.Model):
     name = models.CharField('Stage Name', max_length=300)
     stub = models.CharField('Stage Stub', max_length=3)
+    tabname = models.CharField('Stage Stub', max_length=80)
     study = models.ForeignKey(Study)
     sessions = models.IntegerField('Number of sessions')
     deadline = models.IntegerField('Time to finish session (in days)')
