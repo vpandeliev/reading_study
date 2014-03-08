@@ -221,6 +221,69 @@ def exs_bye_page(request):
 
 
 @login_required
+def exs_welcome_page(request):
+
+    template_file = open("/Volumes/Macintosh HD/Users/velian/Dropbox/Tangra/portal/user_studies/exs/stages/welcome_page/template.html", "r")
+    template = Template("".join(template_file.readlines()))
+
+    context = RequestContext(request)
+    
+    #get study:
+    current_stage = None
+    study = Study.objects.get(name="example_study")
+    active_stages = UserStage.objects.filter(user=request.user, status=1)
+    for s in active_stages:
+        if s.stage.study == study:
+            current_stage = s
+    
+    context["current_stage"] = current_stage
+    
+    return HttpResponse(template.render(context))
+
+
+@login_required
+def exs_simple_task(request):
+
+    template_file = open("/Volumes/Macintosh HD/Users/velian/Dropbox/Tangra/portal/user_studies/exs/stages/simple_task/template.html", "r")
+    template = Template("".join(template_file.readlines()))
+
+    context = RequestContext(request)
+    
+    #get study:
+    current_stage = None
+    study = Study.objects.get(name="example_study")
+    active_stages = UserStage.objects.filter(user=request.user, status=1)
+    for s in active_stages:
+        if s.stage.study == study:
+            current_stage = s
+    
+    context["current_stage"] = current_stage
+    
+    return HttpResponse(template.render(context))
+
+
+@login_required
+def exs_bye_page(request):
+
+    template_file = open("/Volumes/Macintosh HD/Users/velian/Dropbox/Tangra/portal/user_studies/exs/stages/bye_page/template.html", "r")
+    template = Template("".join(template_file.readlines()))
+
+    context = RequestContext(request)
+    
+    #get study:
+    current_stage = None
+    study = Study.objects.get(name="example_study")
+    active_stages = UserStage.objects.filter(user=request.user, status=1)
+    for s in active_stages:
+        if s.stage.study == study:
+            current_stage = s
+    
+    context["current_stage"] = current_stage
+    
+    return HttpResponse(template.render(context))
+
+
+@login_required
 def java_check_java_check(request):
 
     template_file = open("/Volumes/Macintosh HD/Users/velian/Dropbox/Tangra/portal/user_studies/java_check/stages/java_check/template.html", "r")

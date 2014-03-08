@@ -58,6 +58,8 @@ def show_one_study(request,as_inv,s_id):
         
     studypart = study.get_study_participant(request.user)
     stages = UserStage.objects.filter(user=request.user, study=study)
+    print("Stages order:")
+    print(stages)
     
     current_stage = studypart.get_current_stage()
     if current_stage:
