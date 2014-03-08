@@ -1,0 +1,12 @@
+{% if form.errors %}
+        <p style="color: red;">
+            Please correct the error{{ form.errors|pluralize }} below.
+        </p>
+    {% endif %}
+
+    <form action="" method="post">
+	<table id="formtable">
+            {{ form.as_table }}
+	</table>
+        <input type="submit" value="{{button}}" />
+    </form>

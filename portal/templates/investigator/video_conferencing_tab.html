@@ -1,0 +1,94 @@
+
+
+<script>
+	// These are the variables that need to be set in Django using the TokBox 
+	// server-side API. 
+
+	// It is important that they are set BEFORE you include the video_div.js 
+	// script below.
+	
+	var apiKey = "{{ api_key }}"; 
+	var sessionId = "{{ session_id }}"; 
+	var token = "{{ token }}"; 
+
+    function send_invite(user)
+    {
+        $('#invite_button').hide();
+        $('#uninvite_button').show();
+        invite_user(user);
+        connect();
+    }
+    
+    function cancel_invite(user)
+    {
+        disconnect();
+        $('#invite_button').show();
+        $('#uninvite_button').hide();
+        uninvite_user(user);
+	    $("#my_video_status").html("Video request cancelled.");
+	    $("#other_video_status").html("Video request cancelled.");
+    }
+	
+</script>
+
+<script src="{{ MEDIA_URL }}js/video_conferencing/open_tok.js" type="text/javascript" charset="utf-8"></script>
+<script src="{{ MEDIA_URL }}js/video_conferencing/ajax_requests.js" type="text/javascript" charset="utf-8"></script>
+
+<link href="{{ MEDIA_URL }}css/video_conferencing.css" type="text/css" rel="stylesheet" >
+<link href="{{ MEDIA_URL }}css/investigator/user_table.css" type="text/css" rel="stylesheet" >
+
+
+<div class="hidden_data" id="ajax_response">HIDDEN!</div>
+
+
+
+<br><br><br>
+
+<div align=center style="width:90%;display:block;">
+	<a href=# onclick="javascript:cancel_invite('{{ username }}')">     
+		<span id="uninvite_button" class="actbutton red" style="width:200px;display:none;padding: 10px;">
+            Cancel Video Chat Request
+    	</span>
+	</a>
+	<a href=# onclick="javascript:send_invite('{{ username }}')"> 
+    	<span id="invite_button" class="actbutton green" style="width:200px;padding: 10px">
+            Send Video Chat Request 
+    	</span>
+	</a>
+</div>
+<br><br><br>
+
+
+<div id="admin_video_wrapper">
+	<div id="opentok_console"></div>
+	<table>
+		<tr>
+			<th> Investigator Video </th>
+			<th> Participant Video </th>
+		</tr>
+		
+		<tr>
+			<td>
+				<div id="myCamera" class="publisherContainer"></div>
+			</td>
+			<td>
+				<div id="subscribers"></div>
+			</td>
+		</tr>
+		
+		<tr>
+			<td>
+				<span style="display:inline;" id="my_video_status">
+					click the button above to <br> 
+					request a chat with {{ username }}
+				</span>
+			</td>
+			<td>
+				<span style="display:inline;" id="other_video_status">
+					
+				</span>
+			</td>
+		</tr>
+		
+	</table>
+</div>

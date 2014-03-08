@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<link href="{{ MEDIA_URL }}css/investigator/user_table.css" type="text/css" rel="stylesheet" >
+<link href="{{ MEDIA_URL }}css/participant/study.css" type="text/css" rel="stylesheet" >
+
+<br>
+
+<!-- Tabs for viewing users in each study separately -->
+<div id="supertabs">
+    <ul>
+        {% for study in my_studies %}
+            <li class={%if forloop.counter == 1%}"tablink on"{%else%}"tablink"{%endif%} 
+                id="tab{{ forloop.counter }}">
+                {{ study }}
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+
+<!-- Tab content for each study -->
+{% for study, users in my_studies.items %}
+    <div id="tab{{forloop.counter}}box" class="tab" {%if forloop.counter != 1%}style="display:none"{%endif%}>
+        {% include 'user_table.html' %}
+    </div>  
+{% endfor %}
+
+
+
+<br><br>
+
+
+{% endblock %}
+
+

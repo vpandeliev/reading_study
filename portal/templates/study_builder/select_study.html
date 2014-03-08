@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Study Selection</h2>
+
+<!-- Specify tab headers here -->
+<div id="supertabs">
+	<ul>
+		<li class="tablink on" id="tab1">Select Studies</li>
+	</ul>
+</div>
+
+
+<!-- First Tab -->
+<div id="tab1box" class="tab" >
+	<center>
+	<div id="stage_info">
+		<h3>Select a study from the list below:</h3>
+		<br>
+		<form action="/study_builder/process_select_study_form" method="post">{% csrf_token %}
+			{{ form.as_p }}
+		<br>
+		<input type="submit" value="Select Study" />
+		</form>
+	</div>
+	</center>
+</div>
+
+
+{% endblock %}

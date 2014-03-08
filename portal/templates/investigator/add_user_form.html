@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<script language="JavaScript">
+    function try_again()
+    {
+        $('#password').val("");
+        $('#verify_password').val("");
+        return false;
+    }
+        
+    function validate_form()
+    {
+        // check for good password
+        var Exp = /^[0-9a-zA-z_]*$/; // alphanumeric
+        
+        var pass1 = $('#password').val();
+        var pass2 = $('#verify_password').val();
+        var username = $('#username').val();
+        
+        if(username.length < 3) {
+            alert("Passwords must be at least 3 characters, please try again.");
+            return try_again();
+        }
+        
+        if(!username.match(Exp)) {
+            alert("Passwords must contain only numbers, letters and underscore characters. Please try again.");
+            return try_again();
+        }
+        
+        if(!pass1.match(Exp)) {
+            alert("Passwords must contain only numbers, letters and underscore characters. Please try again.");
+            return try_again();
+        }
+        
+        if (pass1 != pass2) {
+            alert("Passwords don't match, please try again.");
+            return try_again();
+        }
+        
+        if(pass1.length < 7) {
+            alert("Passwords must be at least 8 characters, please try again.");
+            return try_again();
+        }
+        
+        return true;
+    }
+
+</script>
+
+
+<br><br>
+
+
+<div id="supertabs">
+    <ul>
+        <li class="tablink on" id="tab1">
+            Add a user
+        </li>
+    </ul>
+</div>
+
+
+<div id="tab1box" class="tab">
+    <br>
+
+    <div id="login_outer">
+        <div id="login_inner">
+            
+            {% if error %}
+                <p class="error">{{error_msg}}</p>
+            {% endif %}
+            
+            <form action="/investigator/add_user/{{study_id}}/" onsubmit="return validate_form();" method="post">
+                <div style="width:100%;border:solid;border-width:1px;padding:3px;">
+                    <label for="group">Select Group</label><br>
+                
+                    {% for group in groups %}
+                        <input type="radio" name="group" value="{{group}}" {% if forloop.first %} checked="checked" {% endif %}> {{group}} <br>
+                    {% endfor %}
+                </div><br>
+                
+                <label for="username">Username</label>
+                <input class="login_input" type="text" name="username" value="" id="username">
+
+                <label for="password">Password</label>
+                <input class="login_input" type="password" name="password" id="password">
+
+                <label for="verify_password">Verify Password</label>
+                <input class="login_input" type="password" name="verify_password" id="verify_password">
+
+                <input id="add_user_submit" type="submit" value="Add User" />
+
+            </form>
+            <div class="clear"></div>
+
+        </div>
+    </div>    
+    
+</div>
+
+
+
+
+{% endblock %}

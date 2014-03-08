@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Study Build Complete!</h2>
+
+<!-- Specify tab headers here -->
+<div id="supertabs">
+	<ul>
+		<li class="tablink on" id="tab1">Confirm Build</li>
+	</ul>
+</div>
+
+
+<!-- First Tab -->
+<div id="tab1box" class="tab" >
+	<center>
+	<div id="stage_info">
+		<h3>{{ selected_study }} was successfully created.</h3>
+	</div>
+	</center>
+</div>
+
+
+{% endblock %}

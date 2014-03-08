@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+
+<study>
+	<name name_stub="exs">reading_study</name>
+	<description>This is a study of reading behaviour.</description>
+	<informed_consent>You must consent or else.</informed_consent>
+	<instructions>Click a button or something.</instructions>
+	<eligibility>Can you breathe?</eligibility>
+	<reward>LOL</reward>
+	<start_date>2014-03-01</start_date>
+	<end_date>2014-04-30</end_date>
+
+
+	<!-- All users who should be able to administer the study. Investigators
+	CANNOT be participants! -->
+	<investigators>
+		<user name="velian" password="asdf"/>
+	</investigators>
+
+	<!-- 
+		List the directories of all stages in your study here (order is not 
+		important in this section)
+	-->
+	<all_stages>
+		<stage directory="welcome_page"/>
+		<stage directory="simple_task"/>
+		<stage directory="bye_page"/>
+	</all_stages>
+
+
+	<!-- One entry for each distinct group in the study -->
+	<all_groups>
+		<group name="groupA">
+			<user name="rsg-01"/>
+			<!-- List the stages you want included in this group IN ORDER -->
+			<stages>
+				<stage directory="welcome_page"/>
+				<stage directory="simple_task" times="21"/>
+				<stage directory="bye_page"/>
+			</stages>
+		</group>
+	</all_groups>
+	
+</study>
+
+
+
+
+
+
+
