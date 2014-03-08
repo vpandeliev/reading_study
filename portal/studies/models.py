@@ -233,7 +233,7 @@ class UserStage(models.Model):
             print("done!!!")
             self.status = 0
             self.end_date = datetime.datetime.now()
-            Data.write(self.study.id, self.user, self.last_session_completed, "STAGE", "STAGE COMPLETED WADDUP")
+            Data.write(self.study.id, self.user, self.last_session_completed, "ses", "session completed")
             #find next stage
             try:
                 next = UserStage.objects.get(user=self.user, study=self.study, order=self.order+1)
