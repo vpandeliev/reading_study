@@ -190,7 +190,7 @@ def create_stages(study_settings):
             stage = Stage.objects.get(study=study, name=directory)
         except Stage.DoesNotExist:
             stage = Stage(study=study, name=directory, description=description, tabname=title)
-        stage.stub = stage_name[0:3]
+        stage.stub = directory[0:3]
         stage.sessions = 1
         stage.deadline = 7
         
