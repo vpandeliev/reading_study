@@ -57,8 +57,7 @@ def show_one_study(request,as_inv,s_id):
         token = opentok_sdk.generate_token(session_id, OpenTokSDK.RoleConstants.PUBLISHER, None, None)
         
     studypart = study.get_study_participant(request.user)
-    stages = UserStage.objects.filter(user=request.user, study=study)
-    print("Stages order:")
+    stages = UserStage.objects.filter(user=request.user, study=study).order_by('stage')
     print(stages)
     
     current_stage = studypart.get_current_stage()
