@@ -30,8 +30,10 @@ function submit_data()
             response_type = jsondata[i]["value"];
              if (response_type =="willreport") {
                 
-                $.post("/study/formcount");    
-        }
+                $.post("/study/formcount/0");    
+                } else if (response_type == "reportedonpaper") {
+                    $.post("/study/formcount/1")
+                }
         }
 	}
 	//data += "&custom_data=Whatever you want";

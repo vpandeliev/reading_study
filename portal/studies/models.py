@@ -5,6 +5,11 @@ from operator import attrgetter
 
 # TODO: determine if removing all the tinymce.HTML fields made a difference/problem
 
+class Document(models.Model):
+    docfile = models.FileField(upload_to='user_docs/')
+    
+ 
+
 class Study(models.Model):
     name = models.CharField('Study Name', max_length=300)
     stub = models.CharField('Study Stub', max_length=60)
@@ -88,7 +93,7 @@ class StudyParticipant(models.Model):
 class Stage(models.Model):
     name = models.CharField('Stage Name', max_length=300)
     stub = models.CharField('Stage Stub', max_length=3)
-    tabname = models.CharField('Stage Stub', max_length=80)
+    tabname = models.CharField('Tab name', max_length=80)
     study = models.ForeignKey(Study)
     sessions = models.IntegerField('Number of sessions')
     deadline = models.IntegerField('Time to finish session (in days)')
@@ -101,7 +106,7 @@ class Stage(models.Model):
         return unicode("%s (%s)" % (self.name, self.study.stub))       
     
     def display(self):
-        return unicode(self.name)
+        return unicode(self.tabname)
     
     def avg(self):
         """docstring for avg"""
@@ -188,7 +193,7 @@ class UserStage(models.Model):
     
     # some of this is copied over from StageGroup... do we need this?
     stage_times_completed = models.IntegerField('Times stage completed')
-    custom_data = models.CharField('Custom Data', max_length=5000, null=True)
+    custom_data = models.CharField('Custom Data', max_length=5000, null=True, blank=True)
     stage_times_total = models.IntegerField('Total times for stage')
     
     
@@ -247,9 +252,33 @@ class UserStage(models.Model):
 
         self.save()
 
-    def increase_form_count(self):
-        self.sessions_completed += 1
+    def total_forms_submitted(self):
+        a, b = self.decode_custom_data()
+        return a + b
+        
+    def decode_custom_data(self):
+        try:
+            a, b = self.custom_data.split(',')
+            return (int(a), int(b))
+        except Exception:
+            return None
+    
+    def encode_custom_data(self,a,b):
+        self.custom_data = "{},{}".format(a,b)
         self.save()
+        
+    def increase_form_count(self, rep_online):
+        #get custom data in form (online, paper)
+        #increase the correct one
+        #save
+        online, paper = self.decode_custom_data()
+        if rep_online:
+            online +=1
+        else:
+            paper +=1
+        self.encode_custom_data(online, paper)
+        #self.sessions_completed += 1
+#        self.save()
         
         
         '''    def stage_completed(self):

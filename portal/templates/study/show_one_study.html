@@ -120,9 +120,9 @@
 	        <h2 class="stage_status">
 	        	{%ifequal astage.status 1 %}
 					{%if astage.overdue%}
-					    <span class="red">Diary for: {{astage.nextdeadline|date:"d M Y"}}</span>
+					    <span class="red">Next date: {{astage.nextdeadline|date:"d M Y"}}</span>
 				    {% else %}
-					    Diary for: {{astage.nextdeadline|date:"d M Y"}}
+					    {{astage.nextdeadline|date:"d M Y"}}
 				    {% endif %}
 					
 				{% else %}{%ifequal astage.status 2 %}

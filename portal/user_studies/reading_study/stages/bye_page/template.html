@@ -1,7 +1,17 @@
-<html>
-<body>
-	BYE
-	
-	<a href="/study"> go back to studies page </a>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load staticfiles %}
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<h1>Success!</h1>
+<p>After 21 days of reporting, it's time for the last push: scheduling your interview. Please e-mail the experimenter and he will be happy to schedule your interview.</p>
+<p>If you forgot the e-mail, it's:</p>
+<img src="{{ MEDIA_URL }}/img/reading-mail.png"/>
+<div style="height:40px;padding:20px 0 0 0;">
+<a href="/study" style="padding: 10px 40px 10px 40px" class="actbutton green">Back to study</a>
+</div>
+{% endblock %}

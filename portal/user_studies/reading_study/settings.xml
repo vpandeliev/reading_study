@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <study>
-	<name name_stub="reading_study">A Study of Academic Reading Behaviour in Computer Science</name>
+	<name name_stub="reading_study">Technology Integration Practices in Academic Readers</name>
 	
 	<description>Digital devices have made great strides in supporting reading. However, many digital technologies have limited support for essential learning activities such as annotation, notetaking and complex navigation. Yet, many students own digital devices and are actively using them to study with. We are investigating the ways in which students read academic materials, the technologies they have decided to use and the problems they encounter while reading.
 	</description>
@@ -12,9 +12,9 @@ Any data you provide will be anonymized and it will be impossible to trace it ba
 	</informed_consent>
 	
 	
-	<instructions>The study consists of three stages: filling out an in-person questionnaire (which should take no more than 60 minutes), recording your reading activities over the course of 21 days and participating in a semi-structured hourlong interview at the end of the study period. IF you have any questions please contact Velian Pandeliev at velian@taglab.ca.</instructions>
+	<instructions>The study consists of three stages: filling out an in-person questionnaire (which should take no more than 60 minutes), recording your reading activities over the course of 21 days and participating in a semi-structured hourlong interview at the end of the study period. If you have any questions please contact Velian Pandeliev at velian@taglab.ca.</instructions>
 	<eligibility>This study is open to all undergraduate and graduate students currently enrolled in a Computer Science program at the University of Toronto. Participants should have normal or corrected-to-normal vision.</eligibility>
-		<reward>Our appreciation for your participating in this study will include an honorarium of up to $120. The amount that you receive will be determined following these rules: $10 for completing the initial survey, $20 for sending us information every day, $40 for sending us detailed information about eleven reading sessions and $30 for completing the in-person interview at the end of the study. If you do not complete the study, you will receive remuneration based on the portion of the study that you completed.</reward>
+		<reward>Our appreciation for your participating in this study will include an honorarium of up to $100. The amount that you receive will be determined following these rules: $10 for completing the initial survey, $20 for sending us information every day, $40 for sending us detailed information about eleven reading sessions and $30 for completing the in-person interview at the end of the study. If you do not complete the study, you will receive remuneration based on the portion of the study that you completed.</reward>
 		
 	<start_date>2014-03-01</start_date>
 	<end_date>2014-04-30</end_date>
@@ -32,7 +32,7 @@ Any data you provide will be anonymized and it will be impossible to trace it ba
 	-->
 	<all_stages>
 		<stage directory="welcome_page" title="First step" description="Welcome to the study! Clicking the button on the right will set the date of your first expected reading report as today's date. Do this when you are prepared to start the study, but no later than the date below."/>
-		<stage directory="simple_task" title="Diary forms" description="Click the button on the right to report a reading session. This is the first day for which we don't have a report from you. "/>
+		<stage directory="simple_task" title="Diary forms" description="Click the button on the right to report a reading session. This is the first day for which we don't have a report from you. " />
 		<stage directory="bye_page" title="Schedule interview" description="Almost finished! Clicking the button on the right brings up instructions on how to schedule your exit interview and receive your compensation."/>
 	</all_stages>
 
@@ -143,7 +143,7 @@ Any data you provide will be anonymized and it will be impossible to trace it ba
 			<!-- List the stages you want included in this group IN ORDER -->
 			<stages>
 				<stage directory="welcome_page"/>
-				<stage directory="simple_task" times="21"/>
+				<stage directory="simple_task" times="21" custom_data="0,0"/>
 				<stage directory="bye_page"/>
 			</stages>
 		</group>

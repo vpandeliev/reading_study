@@ -1,7 +1,9 @@
 from django import forms
 from portal.studies.models import *
 from django.contrib.admin import widgets
-	
+from settings import MEDIA_ROOT
+import os
+
 class NewStudyForm(forms.ModelForm):
     class Meta:
         model = Study
@@ -12,6 +14,24 @@ class AddParticipantForm(forms.Form):
     email = forms.EmailField()
     role = forms.BooleanField(label="Investigator?", required=False) #participant by default
 
+class DocumentForm(forms.Form):
+    docfile = forms.FileField(
+        label='Select a file'
+    )
+
+    def handle_uploaded_file(self,file, custom_path, filename):
+        #print type(file), "file.name=",file.name
+        #print dir(file)
+        #if the directory doesn't exist, create it
+        file_number = "00"
+        directory = MEDIA_ROOT + '/user_images/' + custom_path + "/"
+        print(file.name)
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+        filepath = directory + filename + "." + file.name.split('.')[-1]
+        destination = open(filepath, 'wb+')
+        for chunk in file.chunks():
+            destination.write(chunk)
 
 class QForm(forms.Form):
     MCUNIQUE =  (('a', 'Answer a'),('b', 'Answer b'))

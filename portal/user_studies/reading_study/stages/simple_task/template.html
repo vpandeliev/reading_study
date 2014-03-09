@@ -4,10 +4,7 @@
 
 {% load staticfiles %}
 
-<script>
-//Used to validate required field responses
-    num_questions = 4
-</script>
+
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="{{ MEDIA_URL }}js/jquery.mobile-1.4.2.css">
@@ -15,6 +12,20 @@
 <script src="{{ MEDIA_URL }}reading_study/js/submit.js"></script>
 <script src="{{ MEDIA_URL }}reading_study/js/table_builder.js"></script>
 <script>
+$("#doctype_other").live( "change", function() { 
+	
+	if ($("#doctype_other").val() != 0){
+		
+		
+		$('#docother').show();
+	} else {
+		$('#docother').hide();
+		$('#docother').val('');
+	}
+	
+	});
+
+
 function cbChanged(checkboxElem, name) {
   //if (checkboxElem.checked) {
     	$('#'+name).toggle();
@@ -55,7 +66,8 @@ function pre_buttons(){
 
 </script>
 <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}reading_study/css/questionairre_style.css">
-	<h3>You have provided data for {{ current_stage.stage_times_completed }} of the 21 days of the study and submitted {{ current_stage.sessions_completed }} reading diary form{{ current_stage.sessions_completed|pluralize }}.</h3>
+	<h3>You have provided data for {{ current_stage.stage_times_completed }} of the 21 days of the study</h3>  
+	<h3>You have submitted a total of {{ current_stage.total_forms_submitted }} reading diary forms ({{ current_stage.decode_custom_data.0 }} online and {{ current_stage.decode_custom_data.1 }} on paper).</h3>
 	
 	{% if current_stage.future_session %}
 	<h1>Diary reporting up to date.</h1>
@@ -67,7 +79,10 @@ function pre_buttons(){
 	
 	
 	
-	<h1>Diary entry for {{current_stage.date_from_session_number|date:"l F jS "}}</h1>
+	<h1>Diary entry for <span style="text-decoration:underline;">{{current_stage.date_from_session_number|date:"l F jS "}}</span></h1>
+	
+	
+	
 	
 	<form id="diary_form" method="post" action="#" onsubmit="submit_data();">
 		<input type="hidden" name="date_of_entry" value="{{ current_stage.date_from_session_number|date:"d.m.Y"}}">
@@ -125,12 +140,12 @@ function pre_buttons(){
 					  <label for="location">Where did this session take place?</label>
 					  <input type="text" name="location" id="location" placeholder="(e.g., office desk, living room, coffee shop)">
 
-					  <label for="goal">Please state the main goal of this session.</label>
+					  <label for="goal">Please state your main goal for this session.</label>
 					<textarea name="goal" id="goal"></textarea>
 
 
-					<label for="layout">Please describe your reading layout!!!!!!!!!</label>
-					<textarea name="layout" id="layout"></textarea>
+					<label for="layout">Please describe your reading layout.</label>
+					<textarea name="layout" id="layout" placeholder="e.g., 'At my desk I had the textbook on my left and was making study notes on the right.'"></textarea>
 					<label for="comments">Do you have any comments about how the reading session went? Were there any moments when you felt frustrated or unable to accomplish a task? What happened?</label>
 					<textarea name="comments" id="comments"></textarea>
 					</fieldset>
@@ -151,9 +166,11 @@ function pre_buttons(){
 				      <input type="checkbox" name="purpose_notes" id="notes" value="1">
 					<label for="rx">Researching for a paper or presentation</label>
 				      <input type="checkbox" name="purpose_rx" id="rx" value="1">
+					<label for="plan">Understanding a process or sequence of steps</label>
+				      <input type="checkbox" name="purpose_plan" id="plan" value="1">
 					<label for="proof">Proof-reading document(s)</label>
 				      <input type="checkbox" name="purpose_proof" id="proof" value="1">
-					<label for="back">Acquiring general or background knowledge on an academic topic</label>
+					<label for="back">Acquiring general or background knowledge</label>
 				      <input type="checkbox" name="purpose_back" id="back" value="1">
 					<label for="purpose_other">Other:</label>
 				      <input type="checkbox" name="purpose_other" id="purpose_other" value="1" onClick="cbChanged(this, 'purpose_other_describe');">
@@ -196,180 +213,43 @@ function pre_buttons(){
 			
 			<p>Over the course of the reading session, I read from the following documents:</p> 
 			
-		<div style="padding-top:20px">
 
-			<fieldset data-role="controlgroup" data-type="horizontal">
-			<legend>Academic articles</legend>
-			<label for=article-0>No documents</label>
-			<input type="radio" name="doctype_article" id="article-0" value="0" checked>
-			<label for=article-1>1 document</label>
-			<input type="radio" name="doctype_article" id="article-1" value="1" >
-			<label for=article-24>2-4 documents</label>
-			<input type="radio" name="doctype_article" id="article-24" value="2" >
-			<label for=article-510>5-10 documents</label>
-			<input type="radio" name="doctype_article" id="article-510" value="5" >
-			<label for=article-11>11+ documents</label>
-			<input type="radio" name="doctype_article" id="article-11" value="11" >
-			</fieldset>
-			</div>
-			<div style="padding-top:20px">
-			
-			<fieldset data-role="controlgroup" data-type="horizontal">
-			<legend>Book or book chapters (incl. textbook)</legend>
-			<label for=book-0>No documents</label>
-			<input type="radio" name="doctype_book" id="book-0" value="0" checked>
-			<label for=book-1>1 document</label>
-			<input type="radio" name="doctype_book" id="book-1" value="1" >
-			<label for=book-24>2-4 documents</label>
-			<input type="radio" name="doctype_book" id="book-24" value="2" >
-			<label for=book-510>5-10 documents</label>
-			<input type="radio" name="doctype_book" id="book-510" value="5" >
-			<label for=book-11>11+ documents</label>
-			<input type="radio" name="doctype_book" id="book-11" value="11" >
-			</fieldset>
-			</div>
-			<div style="padding-top:20px">
-			
-			<fieldset data-role="controlgroup" data-type="horizontal">
-			<legend>Lecture slides</legend>
-			<label for=slides-0>No documents</label>
-			<input type="radio" name="doctype_slides" id="slides-0" value="0" checked>
-			<label for=slides-1>1 document</label>
-			<input type="radio" name="doctype_slides" id="slides-1" value="1" >
-			<label for=slides-24>2-4 documents</label>
-			<input type="radio" name="doctype_slides" id="slides-24" value="2" >
-			<label for=slides-510>5-10 documents</label>
-			<input type="radio" name="doctype_slides" id="slides-510" value="5" >
-			<label for=slides-11>11+ documents</label>
-			<input type="radio" name="doctype_slides" id="slides-11" value="11" >
-			</fieldset>
-			</div>
-			<div style="padding-top:20px">
-			
-			<fieldset data-role="controlgroup" data-type="horizontal">
-			<legend>My own notes</legend>
-			<label for=mynotes-0>No documents</label>
-			<input type="radio" name="doctype_mynotes" id="mynotes-0" value="0" checked>
-			<label for=mynotes-1>1 document</label>
-			<input type="radio" name="doctype_mynotes" id="mynotes-1" value="1" >
-			<label for=mynotes-24>2-4 documents</label>
-			<input type="radio" name="doctype_mynotes" id="mynotes-24" value="2" >
-			<label for=mynotes-510>5-10 documents</label>
-			<input type="radio" name="doctype_mynotes" id="mynotes-510" value="5" >
-			<label for=mynotes-11>11+ documents</label>
-			<input type="radio" name="doctype_mynotes" id="mynotes-11" value="11" >
-			</fieldset>
-			</div>
-			<div style="padding-top:20px">
-			
-			<fieldset data-role="controlgroup" data-type="horizontal">
-			<legend>Someone else's notes</legend>
-			<label for=othernotes-0>No documents</label>
-			<input type="radio" name="doctype_othernotes" id="othernotes-0" value="0" checked>
-			<label for=othernotes-1>1 document</label>
-			<input type="radio" name="doctype_othernotes" id="othernotes-1" value="1" >
-			<label for=othernotes-24>2-4 documents</label>
-			<input type="radio" name="doctype_othernotes" id="othernotes-24" value="2" >
-			<label for=othernotes-510>5-10 documents</label>
-			<input type="radio" name="doctype_othernotes" id="othernotes-510" value="5" >
-			<label for=othernotes-11>11+ documents</label>
-			<input type="radio" name="doctype_othernotes" id="othernotes-11" value="11" >
-			</fieldset>
-			</div>
-			<div style="padding-top:20px">
-			<fieldset data-role="controlgroup" data-type="horizontal">
-			<legend>Encyclopedic articles</legend>
-			<label for=encyclopedia-0>No documents</label>
-			<input type="radio" name="doctype_encyclopedia" id="encyclopedia-0" value="0" checked>
-			<label for=encyclopedia-1>1 document</label>
-			<input type="radio" name="doctype_encyclopedia" id="encyclopedia-1" value="1" >
-			<label for=encyclopedia-24>2-4 documents</label>
-			<input type="radio" name="doctype_encyclopedia" id="encyclopedia-24" value="2" >
-			<label for=encyclopedia-510>5-10 documents</label>
-			<input type="radio" name="doctype_encyclopedia" id="encyclopedia-510" value="5" >
-			<label for=encyclopedia-11>11+ documents</label>
-			<input type="radio" name="doctype_encyclopedia" id="encyclopedia-11" value="11" >
-			</fieldset>
-		</div>
-			<div style="padding-top:30px">
-			<fieldset data-role="controlgroup" data-type="horizontal">
-			<legend>Questions and answers (e.g., forum or discussion board)</legend>
-			<label for=qa-0>No documents</label>
-			<input type="radio" name="doctype_qa" id="qa-0" value="0" checked>
-			<label for=qa-1>1 document</label>
-			<input type="radio" name="doctype_qa" id="qa-1" value="1" >
-			<label for=qa-24>2-4 documents</label>
-			<input type="radio" name="doctype_qa" id="qa-24" value="2" >
-			<label for=qa-510>5-10 documents</label>
-			<input type="radio" name="doctype_qa" id="qa-510" value="5" >
-			<label for=qa-11>11+ documents</label>
-			<input type="radio" name="doctype_qa" id="qa-11" value="11" >
-			</fieldset>
-		</div>
-		<div style="padding-top:20px">
-
-			<fieldset data-role="controlgroup" data-type="horizontal">
-			<legend>Step-by-step procedures (e.g., assignment handout)</legend>
-			<label for=procedure-0>No documents</label>
-			<input type="radio" name="doctype_procedure" id="procedure-0" value="0" checked>
-			<label for=procedure-1>1 document</label>
-			<input type="radio" name="doctype_procedure" id="procedure-1" value="1" >
-			<label for=procedure-24>2-4 documents</label>
-			<input type="radio" name="doctype_procedure" id="procedure-24" value="2" >
-			<label for=procedure-510>5-10 documents</label>
-			<input type="radio" name="doctype_procedure" id="procedure-510" value="5" >
-			<label for=procedure-11>11+ documents</label>
-			<input type="radio" name="doctype_procedure" id="procedure-11" value="11" >
-			</fieldset>
-		</div>
-		<div style="padding-top:20px">
-			<fieldset data-role="controlgroup" data-type="horizontal">
-			<legend>Scholarly or library records</legend>
-			<label for=record-0>No documents</label>
-			<input type="radio" name="doctype_record" id="record-0" value="0" checked>
-			<label for=record-1>1 document</label>
-			<input type="radio" name="doctype_record" id="record-1" value="1" >
-			<label for=record-24>2-4 documents</label>
-			<input type="radio" name="doctype_record" id="record-24" value="2" >
-			<label for=record-510>5-10 documents</label>
-			<input type="radio" name="doctype_record" id="record-510" value="5" >
-			<label for=record-11>11+ documents</label>
-			<input type="radio" name="doctype_record" id="record-11" value="11" >
-			</fieldset>
-		</div>
-		<div style="padding-top:20px">
-			<fieldset data-role="controlgroup" data-type="horizontal">
-			<legend>Programming code</legend>
-			<label for=code-0>No documents</label>
-			<input type="radio" name="doctype_code" id="code-0" value="0" checked>
-			<label for=code-1>1 document</label>
-			<input type="radio" name="doctype_code" id="code-1" value="1" >
-			<label for=code-24>2-4 documents</label>
-			<input type="radio" name="doctype_code" id="code-24" value="2" >
-			<label for=code-510>5-10 documents</label>
-			<input type="radio" name="doctype_code" id="code-510" value="5" >
-			<label for=code-11>11+ documents</label>
-			<input type="radio" name="doctype_code" id="code-11" value="11" >
-			</fieldset>
-		</div>
-		<div style="padding-top:20px">
-			<fieldset data-role="controlgroup" data-type="horizontal">
-			<legend>Other (please describe below)</legend>
-			<label for=other-0>No documents</label>
-			<input type="radio" name="doctype_other" id="other-0" value="0" checked onclick="docOtherChanged(this);">
-			<label for=other-1>1 document</label>
-			<input type="radio" name="doctype_other" id="other-1" value="1" onclick="docOtherChanged(this);">
-			<label for=other-24>2-4 documents</label>
-			<input type="radio" name="doctype_other" id="other-24" value="2" onclick="docOtherChanged(this);">
-			<label for=other-510>5-10 documents</label>
-			<input type="radio" name="doctype_other" id="other-510" value="5" onclick="docOtherChanged(this);">
-			<label for=other-11>11+ documents</label>
-			<input type="radio" name="doctype_other" id="other-11" value="11" onclick="docOtherChanged(this);">
-			</fieldset>		
-					
-		</div>
+			<fieldset class="ui-field-contain">
+<label for="doctype_article">Academic articles</label>
+  <input type="range" name="doctype_article" id="doctype_article" value="0" min="0" step="1" max="20">
+</fieldset><fieldset class="ui-field-contain">	
+<label for="doctype_book">Books (or book chapters)</label>
+  <input type="range" name="doctype_book" id="doctype_book" value="0" min="0" step="1" max="20">	
+</fieldset><fieldset class="ui-field-contain">	
+	<label for="doctype_slides">Lecture slides</label>
+  <input type="range" name="doctype_slides" id="doctype_slides" value="0" min="0" step="1" max="20">	
+</fieldset><fieldset class="ui-field-contain">	
+	<label for="doctype_own_notes">My own notes</label>
+  <input type="range" name="doctype_own_notes" id="doctype_own_notes" value="0" min="0" step="1" max="20">	
+</fieldset><fieldset class="ui-field-contain">	
+<label for="doctype_other_notes">Someone else's notes</label>
+  <input type="range" name="doctype_other_notes" id="doctype_other_notes" value="0" min="0" step="1" max="20">	
+</fieldset><fieldset class="ui-field-contain">	
+<label for="doctype_encyclopedia">Encyclopedic article</label>
+  <input type="range" name="doctype_encyclopedia" id="doctype_encyclopedia" value="0" min="0" step="1" max="20">
+</fieldset><fieldset class="ui-field-contain">	<label for="doctype_qa">Questions and answers (e.g., forum or discussion board)</label>
+  <input type="range" name="doctype_qa" id="doctype_qa" value="0" min="0" step="1" max="20">
+</fieldset><fieldset class="ui-field-contain">	
+<label for="doctype_plan">Step-by-step procedure (e.g., assignment or tutorial)</label>
+  <input type="range" name="doctype_plan" id="doctype_plan" value="0" min="0" step="1" max="20">
+</fieldset><fieldset class="ui-field-contain">	
+	<label for="doctype_record">Scholarly or library record</label>
+  <input type="range" name="doctype_record" id="doctype_record" value="0" min="0" step="1" max="20">
+</fieldset><fieldset class="ui-field-contain">	
+<label for="doctype_code">Programming code</label>
+  <input type="range" name="doctype_code" id="doctype_code" value="0" min="0" step="1" max="20">
+</fieldset><div id="other_slider"><fieldset class="ui-field-contain">	
+<label for="doctype_other">Other</label>
+  <input type="range" name="doctype_other" id="doctype_other" value="0" min="0" step="1" max="20">
+</fieldset><fieldset class="ui-field-contain">	
+</div>			
  <input style="display:none;" type="text" name="doctype_other_describe" id="docother" placeholder="(e.g., newspaper article)">
-
+</fieldset>
 
 
 
@@ -427,13 +307,13 @@ function pre_buttons(){
 <input type="checkbox" name="mgmt_digital_storage" id="digital_storage" value="1">
 <label for="paper_storage">Filed or stored paper documents so I could find them later.</label>
 <input type="checkbox" name="mgmt_paper_storage" id="paper_storage" value="1">
-<label for="reference">Saved reference, URLs or descriptions of documents in order to find them again in the future.</label>
+<label for="reference">Saved references, URLs or descriptions of documents in order to find them again in the future.</label>
 <input type="checkbox" name="mgmt_reference" id="reference" value="1">
 <label for="borrow">Read from documents that I did not own (e.g. library books).</label>
 <input type="checkbox" name="mgmt_borrow" id="borrow" value="1">
-<label for="digital_annotation">Saved digital documents that included content generated during this session (e.g., annotations, highlighting, notes).</label>
+<label for="digital_annotation">Saved digital documents that included content generated during this session (e.g., annotations, highlighting).</label>
 <input type="checkbox" name="mgmt_digital_annotation" id="digital_annotation" value="1">
-<label for="paper_annotation">Filed or retained paper documents that included content generated during this session (e.g., annotations, highlighting, notes).</label>
+<label for="paper_annotation">Filed or retained paper documents that included content generated during this session (e.g., annotations, highlighting).</label>
 <input type="checkbox" name="mgmt_paper_annotation" id="paper_annotation" value="1">
 			</fieldset>
 

@@ -125,7 +125,8 @@ def create_groups(study_settings):
         stages = study_settings.groups[group_name]['stages']
         times = study_settings.groups[group_name]['times']
         custom_data = study_settings.groups[group_name]['custom_data']
-
+        print("GROUPS CUSTOM DATA")
+        print(custom_data)
         group = create_group(study, group_name)
         
         # specify the order that the stages appear for this group
@@ -185,7 +186,8 @@ def create_stages(study_settings):
 
     study = Study.objects.get(name=study_settings.name)
     
-    for (directory, description, title) in zip(study_settings.stages, study_settings.stage_descriptions, study_settings.stage_titles):
+    for (directory, description, title) in zip(study_settings.stages, study_settings.stage_descriptions, 
+                                study_settings.stage_titles):
         try:
             stage = Stage.objects.get(study=study, name=directory)
         except Stage.DoesNotExist:

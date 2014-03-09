@@ -314,7 +314,7 @@ def reading_study_welcome_page(request):
     
     #get study:
     current_stage = None
-    study = Study.objects.get(name="A Study of Academic Reading Behaviour in Computer Science")
+    study = Study.objects.get(name="Technology Integration Practices in Academic Readers")
     active_stages = UserStage.objects.filter(user=request.user, status=1)
     for s in active_stages:
         if s.stage.study == study:
@@ -335,7 +335,7 @@ def reading_study_simple_task(request):
     
     #get study:
     current_stage = None
-    study = Study.objects.get(name="A Study of Academic Reading Behaviour in Computer Science")
+    study = Study.objects.get(name="Technology Integration Practices in Academic Readers")
     active_stages = UserStage.objects.filter(user=request.user, status=1)
     for s in active_stages:
         if s.stage.study == study:
@@ -356,7 +356,7 @@ def reading_study_bye_page(request):
     
     #get study:
     current_stage = None
-    study = Study.objects.get(name="A Study of Academic Reading Behaviour in Computer Science")
+    study = Study.objects.get(name="Technology Integration Practices in Academic Readers")
     active_stages = UserStage.objects.filter(user=request.user, status=1)
     for s in active_stages:
         if s.stage.study == study:

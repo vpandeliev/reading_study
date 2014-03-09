@@ -13,12 +13,47 @@ from django.contrib.auth.models import User
 #from context_processors import *
 import datetime
 from django.core.cache import cache
-
+from django.core.urlresolvers import reverse
 
 from portal.investigator.video_conferencing import OpenTokSDK
 
 
+
+###### Upload test
+
+from portal.studies.models import Document
+from portal.studies.forms import DocumentForm
+
+
+def upload_file(request):
+    # Handle file upload
+    if request.method == 'POST':
+        form = DocumentForm(request.POST, request.FILES)
+        print(request.POST)
+        if form.is_valid():
+            print(request.FILES['docfile'])
+            #form.handle_uploaded_file(request.FILES['docfile'], str(request.user), "THISDATE")
+            form.handle_uploaded_file(request.FILES['docfile'], "MAKEADIR", "THISDATE")
+            #newdoc = Document(docfile = request.FILES['docfile'])
+            #newdoc.save()
+            
+            # Redirect to the document list after POST
+            #HttpResponseRedirect(reverse('portal.studies.views.upload_file')))
+            return HttpResponse("success")
+    else:
+        form = DocumentForm() # A empty, unbound form
+
+    # Load documents for the list page
+    documents = Document.objects.all()
+
+    # Render list page with the documents and the form
+    return render_to_response(
+        'study/upload.html',
+        {'documents': documents, 'form': form},
+        context_instance=RequestContext(request)
+    )
 ############### Study
+
 
 
 @login_required
@@ -136,7 +171,7 @@ def finish_session(request):
     return HttpResponseRedirect('/study/0/'+str(study_id))
 
 @login_required
-def increment_form_count(request):
+def increment_form_count(request, mode):
     # TODO: Find a better way to determine what session you're in...
 
     study_id = request.session['study_id']
@@ -145,8 +180,10 @@ def increment_form_count(request):
     studypart = StudyParticipant.objects.get(study=study,user=request.user)
     #stage = studypart.get_current_stage()
     stage = UserStage.objects.get(user=request.user, study=study, status=1)
-    stage.increase_form_count()
-
+    
+    online = mode == '0'
+    stage.increase_form_count(online)
+    print("Mode", mode, "type", type(mode))
     return HttpResponse("success")
 
 
