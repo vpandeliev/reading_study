@@ -6,24 +6,24 @@
 
 
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
 <link rel="stylesheet" href="{{ MEDIA_URL }}js/jquery.mobile-1.4.2.css">
 <script src="{{ MEDIA_URL }}js/jquery.mobile-1.4.2.min.js"></script>
 <script src="{{ MEDIA_URL }}reading_study/js/submit.js"></script>
 <script src="{{ MEDIA_URL }}reading_study/js/table_builder.js"></script>
 <script>
-$("#doctype_other").live( "change", function() { 
-	
-	if ($("#doctype_other").val() != 0){
-		
-		
-		$('#docother').show();
-	} else {
-		$('#docother').hide();
-		$('#docother').val('');
-	}
-	
-	});
+$("#doctype_other_1").live( "change", function() { 
+	if ($("#doctype_other_1").val() != 0){$('#docother1').show();} else {
+		$('#docother1').hide();
+		$('#docother1').val('');}});
+$("#doctype_other_2").live( "change", function() { 
+	if ($("#doctype_other_2").val() != 0){$('#docother2').show();} else {
+		$('#docother2').hide();
+		$('#docother2').val('');}});
+$("#doctype_other_3").live( "change", function() { 
+	if ($("#doctype_other_3").val() != 0){$('#docother3').show();} else {
+		$('#docother3').hide();
+		$('#docother3').val('');}});
 
 
 function cbChanged(checkboxElem, name) {
@@ -66,6 +66,8 @@ function pre_buttons(){
 
 </script>
 <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}reading_study/css/questionairre_style.css">
+
+<div style="width:100%">
 	<h3>You have provided data for {{ current_stage.stage_times_completed }} of the 21 days of the study</h3>  
 	<h3>You have submitted a total of {{ current_stage.total_forms_submitted }} reading diary forms ({{ current_stage.decode_custom_data.0 }} online and {{ current_stage.decode_custom_data.1 }} on paper).</h3>
 	
@@ -91,7 +93,7 @@ function pre_buttons(){
 			<p>Please select an option below:
 				<fieldset class="ui-field-contain">
 
-				      <label for="willreport">I <b>read</b> on {{current_stage.date_from_session_number|date:"F jS"}} and I would like to report my reading.</label>
+				      <label for="willreport">I <b>read</b> on {{current_stage.date_from_session_number|date:"F jS"}} and I would like to report my reading online.</label>
 				      <input type="radio" name="didyouread" id="willreport" value="willreport" onclick="pre_buttons();">
 					  <label for="reportedonpaper">I <b>read</b> on {{current_stage.date_from_session_number|date:"F jS"}} and I have filled out a paper diary form.</label>
 				      <input type="radio" name="didyouread" id="reportedonpaper" value="reportedonpaper" onclick="pre_buttons();">
@@ -115,7 +117,7 @@ function pre_buttons(){
 			
 				<div class="ui-field-contain">
 					
-					<fieldset class="ui-field-contain">
+					<fieldset>
 				    <label for="start_time">What time of day did this session begin?</label>
 				    <select name="start_time" id="start_time">
 				      <option value="em">Early morning (6 - 9 am)</option>
@@ -128,11 +130,11 @@ function pre_buttons(){
 				      <option value="ln">Before dawn (3 - 6 am)</option>
 				    </select>
 				</fieldset>
-					<fieldset class="ui-field-contain">
+					<fieldset>
 					<label for="duration">How long did the session last, in minutes?</label>
 					  <input type="range" name="duration" id="duration" value="10" min="10" step="10" max="120">
 				  </fieldset>
-					<fieldset class="ui-field-contain">
+					<fieldset>
 					<label for="break">How much time, in minutes, did you spend on non-reading activities (e.g., writing, taking a break)?</label>
 					  <input type="range" name="break" id="break" value="10" min="10" step="10" max="120">
 				  </fieldset>
@@ -151,9 +153,10 @@ function pre_buttons(){
 					</fieldset>
 				
 					<br/><h3>Reading and documents</h3>
+<p>I was reading for the purposes of (tick all that apply):</p>
 
 					<fieldset data-role="controlgroup">
-				    <legend>I was reading for the purposes of (tick all that apply):</legend>
+				    
 				      <label for="und">Understanding lectures or course material</label>
 				      <input type="checkbox" name="purpose_und" id="und" value="1">
 				      <label for="disc">Preparing for a class or discussion</label>
@@ -176,9 +179,9 @@ function pre_buttons(){
 				      <input type="checkbox" name="purpose_other" id="purpose_other" value="1" onClick="cbChanged(this, 'purpose_other_describe');">
 					  <input style="display:none;" type="text" name="purpose_other_describe" id="purpose_other_describe" placeholder="(e.g., entertainment)">
 				  </fieldset>
-					
+				<p>During this session, I used the following devices/technologies to read	 (tick all that apply):</p>
 					<fieldset data-role="controlgroup">
-				    <legend>During this session, I used the following devices/technologies to read	 (tick all that apply):</legend>
+				    
 				      <label for="book">Bound printed paper (e.g., book or coursepack)</label>
 				      <input type="checkbox" name="tech_book" id="book" value="1">
 				      <label for="printout">Loose or stapled printed paper (e.g., printout)</label>
@@ -214,42 +217,40 @@ function pre_buttons(){
 			<p>Over the course of the reading session, I read from the following documents:</p> 
 			
 
-			<fieldset class="ui-field-contain">
+			<fieldset>
 <label for="doctype_article">Academic articles</label>
   <input type="range" name="doctype_article" id="doctype_article" value="0" min="0" step="1" max="20">
-</fieldset><fieldset class="ui-field-contain">	
-<label for="doctype_book">Books (or book chapters)</label>
+<label style="padding-top:15px" for="doctype_book">Books (or book chapters)</label>
   <input type="range" name="doctype_book" id="doctype_book" value="0" min="0" step="1" max="20">	
-</fieldset><fieldset class="ui-field-contain">	
-	<label for="doctype_slides">Lecture slides</label>
+	<label style="padding-top:15px" for="doctype_slides">Lecture slides</label>
   <input type="range" name="doctype_slides" id="doctype_slides" value="0" min="0" step="1" max="20">	
-</fieldset><fieldset class="ui-field-contain">	
-	<label for="doctype_own_notes">My own notes</label>
+	<label style="padding-top:15px" for="doctype_own_notes">My own notes</label>
   <input type="range" name="doctype_own_notes" id="doctype_own_notes" value="0" min="0" step="1" max="20">	
-</fieldset><fieldset class="ui-field-contain">	
-<label for="doctype_other_notes">Someone else's notes</label>
+<label style="padding-top:15px" for="doctype_other_notes">Someone else's notes</label>
   <input type="range" name="doctype_other_notes" id="doctype_other_notes" value="0" min="0" step="1" max="20">	
-</fieldset><fieldset class="ui-field-contain">	
-<label for="doctype_encyclopedia">Encyclopedic article</label>
+<label style="padding-top:15px" for="doctype_encyclopedia">Encyclopedic articles</label>
   <input type="range" name="doctype_encyclopedia" id="doctype_encyclopedia" value="0" min="0" step="1" max="20">
-</fieldset><fieldset class="ui-field-contain">	<label for="doctype_qa">Questions and answers (e.g., forum or discussion board)</label>
+	<label style="padding-top:15px" for="doctype_qa">Questions and answers (e.g., forum or discussion board)</label>
   <input type="range" name="doctype_qa" id="doctype_qa" value="0" min="0" step="1" max="20">
-</fieldset><fieldset class="ui-field-contain">	
-<label for="doctype_plan">Step-by-step procedure (e.g., assignment or tutorial)</label>
+<label style="padding-top:15px" for="doctype_plan">Step-by-step procedure (e.g., assignment or tutorial)</label>
   <input type="range" name="doctype_plan" id="doctype_plan" value="0" min="0" step="1" max="20">
-</fieldset><fieldset class="ui-field-contain">	
-	<label for="doctype_record">Scholarly or library record</label>
+	<label style="padding-top:15px" for="doctype_record">Scholarly or library record</label>
   <input type="range" name="doctype_record" id="doctype_record" value="0" min="0" step="1" max="20">
-</fieldset><fieldset class="ui-field-contain">	
-<label for="doctype_code">Programming code</label>
+<label style="padding-top:15px" for="doctype_code">Programming code</label>
   <input type="range" name="doctype_code" id="doctype_code" value="0" min="0" step="1" max="20">
-</fieldset><div id="other_slider"><fieldset class="ui-field-contain">	
-<label for="doctype_other">Other</label>
-  <input type="range" name="doctype_other" id="doctype_other" value="0" min="0" step="1" max="20">
-</fieldset><fieldset class="ui-field-contain">	
-</div>			
- <input style="display:none;" type="text" name="doctype_other_describe" id="docother" placeholder="(e.g., newspaper article)">
-</fieldset>
+<label style="padding-top:15px" for="doctype_other_1">Other</label>
+  <input type="range" name="doctype_other_1" id="doctype_other_1" value="0" min="0" step="1" max="20">
+<input style="display:none;" type="text" name="doctype_other_1_describe" id="docother1" placeholder="(e.g., newspaper article)">
+	<label style="padding-top:15px" for="doctype_other_2">Other</label>
+	  <input type="range" name="doctype_other_2" id="doctype_other_2" value="0" min="0" step="1" max="20">
+	<input style="display:none;" type="text" name="doctype_other_2_describe" id="docother2" placeholder="(e.g., matchbox)">
+	
+		<label style="padding-top:15px" for="doctype_other_3">Other</label>
+		  <input type="range" name="doctype_other_3" id="doctype_other_3" value="0" min="0" step="1" max="20">
+
+		<input style="display:none;" type="text" name="doctype_other_3_describe" id="docother3" placeholder="(e.g., cereal box)">
+		</fieldset>
+
 
 
 
@@ -362,7 +363,7 @@ function pre_buttons(){
 	</form>
 
 	<br>
-	
+</div>	
 {% endif %}
 {% endblock %}
 
