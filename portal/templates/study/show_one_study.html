@@ -9,7 +9,7 @@
 <link href="{{ MEDIA_URL }}css/investigator/user_table.css" type="text/css" rel="stylesheet" >
 <link href="{{ MEDIA_URL }}css/participant/study.css" type="text/css" rel="stylesheet" >
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=0.5">
 
 
 <div class="hidden_data" id="ajax_response">HIDDEN!</div>
@@ -121,7 +121,7 @@
 	        <h2 class="stage_status">
 	        	{%ifequal astage.status 1 %}
 					{%if astage.overdue%}
-					    <span class="red">Next date: {{astage.nextdeadline|date:"d M Y"}}</span>
+					    <span class="red">{{astage.nextdeadline|date:"d M Y"}}</span>
 				    {% else %}
 					    {{astage.nextdeadline|date:"d M Y"}}
 				    {% endif %}
