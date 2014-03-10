@@ -18,7 +18,7 @@ def get_user_redirect(user):
     elif user_role == UserRoles.PARTICIPANT:
         return '/study/'
     else:
-        return '/unknown_user_role/'
+        return '/accounts/logout/'
     
 
 def home(request):
