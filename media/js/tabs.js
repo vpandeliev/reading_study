@@ -1,10 +1,11 @@
 $(document).ready(function() {
     num = $('#stages_nav').attr('num');
-	width = $('#login_menu').width() + 96;
+	width = $('#mobile_shrinky').width();
 	//console.log(width);
 	//console.log(Math.round(width/num));
     
-    $('.stage').css('width', ((width - 100) / num) + 'px');
+    $('.stage').css('width', ((width - 4) / num) + 'px');
+    //$('.stage').width((width-4)/num+"px");
     
     $('.tablink', this).bind('click', function(){
         currtab = $(this);

@@ -107,10 +107,21 @@ float: right;}
   width: 50px;
 }
 
+@media (max-device-width: 800px) {
+    #mobile_shrinky {
+        background-color:#ff0000;
+        width:60%; margin: 0 auto;
+    }
+}
+#mobile_shrinky {
+    width:90%; margin: 0 auto;
+} 
+
+
 #outer {
   margin: auto;
   text-align: left;
-  width: 1024px;
+  width: 100%;
 }
 
 #mask {
@@ -256,7 +267,7 @@ float: right;}
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
 	background:#fafafa;
 	margin: 0 auto;
-	width: 900px;
+	width: 90%;
 }
 
 .stage_header table tr td {
