@@ -109,8 +109,7 @@ float: right;}
 
 @media (max-device-width: 800px) {
     #mobile_shrinky {
-        background-color:#ff0000;
-        width:60%; margin: 0 auto;
+        width:98%; margin: 0 auto;
     }
 }
 #mobile_shrinky {
