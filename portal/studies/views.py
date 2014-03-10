@@ -25,33 +25,29 @@ from portal.studies.models import Document
 from portal.studies.forms import DocumentForm
 
 
-def upload_file(request):
+def upload_file(request, datestring):
     # Handle file upload
+    #print("DATESTRING", datestring)
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
-        print(request.POST)
         if form.is_valid():
-            print(request.FILES['docfile'])
             #form.handle_uploaded_file(request.FILES['docfile'], str(request.user), "THISDATE")
-            form.handle_uploaded_file(request.FILES['docfile'], "MAKEADIR", "THISDATE")
+            form.handle_uploaded_file(request.FILES['docfile'], str(request.user), datestring)
             #newdoc = Document(docfile = request.FILES['docfile'])
             #newdoc.save()
             
             # Redirect to the document list after POST
             #HttpResponseRedirect(reverse('portal.studies.views.upload_file')))
-            return HttpResponse("success")
-    else:
-        form = DocumentForm() # A empty, unbound form
-
-    # Load documents for the list page
-    documents = Document.objects.all()
-
-    # Render list page with the documents and the form
-    return render_to_response(
-        'study/upload.html',
-        {'documents': documents, 'form': form},
-        context_instance=RequestContext(request)
-    )
+            return HttpResponseRedirect("/study/")
+        else:
+            form = DocumentForm() # A empty, unbound form
+            return render_to_response(
+                'study/upload.html',
+                {'form': form},
+                context_instance=RequestContext(request)
+            )
+    return HttpResponseBadRequest()
+    
 ############### Study
 
 
@@ -93,7 +89,6 @@ def show_one_study(request,as_inv,s_id):
         
     studypart = study.get_study_participant(request.user)
     stages = UserStage.objects.filter(user=request.user, study=study).order_by('stage')
-    print(stages)
     
     current_stage = studypart.get_current_stage()
     if current_stage:
@@ -167,24 +162,22 @@ def finish_session(request):
     #stage = studypart.get_current_stage()
     stage = UserStage.objects.get(user=request.user, study=study, status=1)
     stage.increase_stage_count()
-    print("in finish_session", stage)
     return HttpResponseRedirect('/study/0/'+str(study_id))
 
-@login_required
-def increment_form_count(request, mode):
+#@login_required
+#def increment_form_count(request, mode):
     # TODO: Find a better way to determine what session you're in...
 
-    study_id = request.session['study_id']
-    study = Study.objects.get(id=study_id)
+#    study_id = request.session['study_id']
+#    study = Study.objects.get(id=study_id)
 
-    studypart = StudyParticipant.objects.get(study=study,user=request.user)
+#    studypart = StudyParticipant.objects.get(study=study,user=request.user)
     #stage = studypart.get_current_stage()
-    stage = UserStage.objects.get(user=request.user, study=study, status=1)
+#    stage = UserStage.objects.get(user=request.user, study=study, status=1)
     
-    online = mode == '0'
-    stage.increase_form_count(online)
-    print("Mode", mode, "type", type(mode))
-    return HttpResponse("success")
+#    online = mode == '0'
+#    stage.increase_form_count(online)
+#    return HttpResponse("success")
 
 
 
@@ -219,22 +212,36 @@ def save_post_data(request):
     if request.method != 'POST': 
         return HttpResponse("not_post")
         
-    studyid = request.session['study_id']
+    study_id = request.session['study_id']
     
     # Save in comma separated value format
     data = ""
     for key in request.POST:
         data = data + "{0},{1}\n".format(key, request.POST[key])
     
+    #if there is a writingthingy, call formthingy
+    #call uploadfilewith this same damn request! wh
+    
+    
     #print >>sys.stderr, data
     #TODO: how to print to stderr without crashing shit?
-    print data
-    
+    #print data
+    date_of_entry = ""
+    try:
+        blip = request.POST["didyouread"]
+        study = Study.objects.get(id=study_id)
+        studypart = StudyParticipant.objects.get(study=study,user=request.user)
+        stage = UserStage.objects.get(user=request.user, study=study, status=1)
+        if blip == "willreport":
+            stage.increase_form_count(True)
+        elif blip == "reportedonpaper":
+            stage.increase_form_count(False)
+    except Exception as e:
+        print("Something went wrong:", e)
     dt = datetime.datetime.now()    
     code = "CSV"
     
     log(request, code, data)
-    
     #send: studyid, request.user, time, data
     return HttpResponse("success")
 

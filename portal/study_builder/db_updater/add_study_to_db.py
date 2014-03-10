@@ -125,8 +125,6 @@ def create_groups(study_settings):
         stages = study_settings.groups[group_name]['stages']
         times = study_settings.groups[group_name]['times']
         custom_data = study_settings.groups[group_name]['custom_data']
-        print("GROUPS CUSTOM DATA")
-        print(custom_data)
         group = create_group(study, group_name)
         
         # specify the order that the stages appear for this group

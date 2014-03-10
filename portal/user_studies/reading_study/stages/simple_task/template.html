@@ -86,9 +86,9 @@ function pre_buttons(){
 	
 	
 	
-	<form id="diary_form" method="post" action="#" onsubmit="submit_data();">
+	<form id="diary_form" method="post" enctype="multipart/form-data" action="#" onsubmit="submit_data();" data-ajax="false">
 		<input type="hidden" name="date_of_entry" value="{{ current_stage.date_from_session_number|date:"d.m.Y"}}">
-
+{% csrf_token %}
 		<div id="pre_questions">
 			<p>Please select an option below:
 				<fieldset class="ui-field-contain">

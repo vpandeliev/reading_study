@@ -211,7 +211,6 @@ class UserStage(models.Model):
         self.session_completed(self)
 
         '''def session_completed(self):
-        print("session completed for", self)
         #self.sessions_completed += 1
         self.last_session_completed = datetime.datetime.now()
         Data.write(self.study.id, self.user, self.last_session_completed, "SSC", "Session Completed")
@@ -235,7 +234,6 @@ class UserStage(models.Model):
         self.stage_times_completed += 1
         self.last_session_completed = datetime.datetime.now()
         if self.stage_times_completed >= self.stage_times_total:
-            print("done!!!")
             self.status = 0
             self.end_date = datetime.datetime.now()
             Data.write(self.study.id, self.user, self.last_session_completed, "ses", "session completed")

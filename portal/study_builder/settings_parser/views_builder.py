@@ -14,8 +14,9 @@ from django.http import *
 from django.contrib.auth.decorators import login_required
 from django.template import Template, Context, RequestContext
 from django.contrib.auth.models import User
-from studies.models import Study, Group, Stage, StageGroup, StudyParticipant, UserStage
+from studies.models import Study, Group, Stage, StageGroup, StudyParticipant, UserStage, Document
 from users.models import UserRoles
+from studies.forms import DocumentForm
 from django.shortcuts import render_to_response
 from django.core.urlresolvers import reverse
 
@@ -33,7 +34,7 @@ def {3}_{1}(request):
     template = Template("".join(template_file.readlines()))
 
     context = RequestContext(request)
-    
+    form = DocumentForm()
     #get study:
     current_stage = None
     study = Study.objects.get(name="{0}")
@@ -43,7 +44,7 @@ def {3}_{1}(request):
             current_stage = s
     
     context["current_stage"] = current_stage
-    
+    context["form"] = form
     return HttpResponse(template.render(context))
 """
     
@@ -53,7 +54,6 @@ def {3}_{1}(request):
     def write_views_file(self, module_dir):
 
         views_file = open("{0}/{1}".format(module_dir, "views.py"), "w")
-        print(module_dir)
         fcn_list = []
         for study in self.settings_list:
             for stage in study.stages:

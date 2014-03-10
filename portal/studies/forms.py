@@ -25,7 +25,6 @@ class DocumentForm(forms.Form):
         #if the directory doesn't exist, create it
         file_number = "00"
         directory = MEDIA_ROOT + '/user_images/' + custom_path + "/"
-        print(file.name)
         if not os.path.exists(directory):
             os.makedirs(directory)
         filepath = directory + filename + "." + file.name.split('.')[-1]

@@ -92,7 +92,6 @@ class StudySettings:
         self.stage_descriptions = extract_attributes(all_stages_node, "stage", "description")
         self.stage_titles = extract_attributes(all_stages_node, "stage", "title")
         self.stage_custom_data = extract_attributes(all_stages_node, "stage", "custom_data")
-        print(self.stage_custom_data)
         # build the investigators list
         investigator_node = dom.getElementsByTagName("investigators")[0]
         self.parse_investigator_node(investigator_node)        

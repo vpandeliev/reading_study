@@ -6,11 +6,13 @@
 
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="{{ MEDIA_URL }}js/jquery.mobile-1.4.2.css">
+<script src="{{ MEDIA_URL }}js/jquery.mobile-1.4.2.min.js"></script>
 
 
-
+<div id="mobile_shrinky">
 		<!-- Upload form. Note enctype attribute! -->
-		<form action="{% url "upload_file" %}" method="post" enctype="multipart/form-data">
+		<form action="{% url "upload_file" %}" method="post" enctype="multipart/form-data" data-ajax="false">
 			{% csrf_token %}
 			<p>{{ form.non_field_errors }}</p>
 			<p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>
@@ -18,10 +20,10 @@
 				{{ form.docfile.errors }}
 				{{ form.docfile }}
 			</p>
-			<p><input type="hidden" value='STAGEDATE'>
+			<p><input type="hidden" value='STAGEEDATE'>
 				<input type="submit" value="Upload" /></p>
 		</form>
-
+</div>
 
 
 

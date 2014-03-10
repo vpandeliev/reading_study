@@ -4,8 +4,9 @@ from django.http import *
 from django.contrib.auth.decorators import login_required
 from django.template import Template, Context, RequestContext
 from django.contrib.auth.models import User
-from studies.models import Study, Group, Stage, StageGroup, StudyParticipant, UserStage
+from studies.models import Study, Group, Stage, StageGroup, StudyParticipant, UserStage, Document
 from users.models import UserRoles
+from studies.forms import DocumentForm
 from django.shortcuts import render_to_response
 from django.core.urlresolvers import reverse
 
@@ -17,7 +18,7 @@ def aim_consent(request):
     template = Template("".join(template_file.readlines()))
 
     context = RequestContext(request)
-    
+    form = DocumentForm()
     #get study:
     current_stage = None
     study = Study.objects.get(name="aiming_test_study")
@@ -27,7 +28,7 @@ def aim_consent(request):
             current_stage = s
     
     context["current_stage"] = current_stage
-    
+    context["form"] = form
     return HttpResponse(template.render(context))
 
 
@@ -38,7 +39,7 @@ def aim_instructions(request):
     template = Template("".join(template_file.readlines()))
 
     context = RequestContext(request)
-    
+    form = DocumentForm()
     #get study:
     current_stage = None
     study = Study.objects.get(name="aiming_test_study")
@@ -48,7 +49,7 @@ def aim_instructions(request):
             current_stage = s
     
     context["current_stage"] = current_stage
-    
+    context["form"] = form
     return HttpResponse(template.render(context))
 
 
@@ -59,7 +60,7 @@ def aim_aiming_task(request):
     template = Template("".join(template_file.readlines()))
 
     context = RequestContext(request)
-    
+    form = DocumentForm()
     #get study:
     current_stage = None
     study = Study.objects.get(name="aiming_test_study")
@@ -69,7 +70,7 @@ def aim_aiming_task(request):
             current_stage = s
     
     context["current_stage"] = current_stage
-    
+    context["form"] = form
     return HttpResponse(template.render(context))
 
 
@@ -80,7 +81,7 @@ def aim_continuation(request):
     template = Template("".join(template_file.readlines()))
 
     context = RequestContext(request)
-    
+    form = DocumentForm()
     #get study:
     current_stage = None
     study = Study.objects.get(name="aiming_test_study")
@@ -90,7 +91,7 @@ def aim_continuation(request):
             current_stage = s
     
     context["current_stage"] = current_stage
-    
+    context["form"] = form
     return HttpResponse(template.render(context))
 
 
@@ -101,7 +102,7 @@ def st2_welcome_page(request):
     template = Template("".join(template_file.readlines()))
 
     context = RequestContext(request)
-    
+    form = DocumentForm()
     #get study:
     current_stage = None
     study = Study.objects.get(name="another_study")
@@ -111,7 +112,7 @@ def st2_welcome_page(request):
             current_stage = s
     
     context["current_stage"] = current_stage
-    
+    context["form"] = form
     return HttpResponse(template.render(context))
 
 
@@ -122,7 +123,7 @@ def st2_simple_task(request):
     template = Template("".join(template_file.readlines()))
 
     context = RequestContext(request)
-    
+    form = DocumentForm()
     #get study:
     current_stage = None
     study = Study.objects.get(name="another_study")
@@ -132,7 +133,7 @@ def st2_simple_task(request):
             current_stage = s
     
     context["current_stage"] = current_stage
-    
+    context["form"] = form
     return HttpResponse(template.render(context))
 
 
@@ -143,7 +144,7 @@ def st2_bye_page(request):
     template = Template("".join(template_file.readlines()))
 
     context = RequestContext(request)
-    
+    form = DocumentForm()
     #get study:
     current_stage = None
     study = Study.objects.get(name="another_study")
@@ -153,7 +154,7 @@ def st2_bye_page(request):
             current_stage = s
     
     context["current_stage"] = current_stage
-    
+    context["form"] = form
     return HttpResponse(template.render(context))
 
 
@@ -164,7 +165,7 @@ def exs_welcome_page(request):
     template = Template("".join(template_file.readlines()))
 
     context = RequestContext(request)
-    
+    form = DocumentForm()
     #get study:
     current_stage = None
     study = Study.objects.get(name="example_study")
@@ -174,7 +175,7 @@ def exs_welcome_page(request):
             current_stage = s
     
     context["current_stage"] = current_stage
-    
+    context["form"] = form
     return HttpResponse(template.render(context))
 
 
@@ -185,7 +186,7 @@ def exs_simple_task(request):
     template = Template("".join(template_file.readlines()))
 
     context = RequestContext(request)
-    
+    form = DocumentForm()
     #get study:
     current_stage = None
     study = Study.objects.get(name="example_study")
@@ -195,7 +196,7 @@ def exs_simple_task(request):
             current_stage = s
     
     context["current_stage"] = current_stage
-    
+    context["form"] = form
     return HttpResponse(template.render(context))
 
 
@@ -206,7 +207,7 @@ def exs_bye_page(request):
     template = Template("".join(template_file.readlines()))
 
     context = RequestContext(request)
-    
+    form = DocumentForm()
     #get study:
     current_stage = None
     study = Study.objects.get(name="example_study")
@@ -216,7 +217,7 @@ def exs_bye_page(request):
             current_stage = s
     
     context["current_stage"] = current_stage
-    
+    context["form"] = form
     return HttpResponse(template.render(context))
 
 
@@ -227,7 +228,7 @@ def exs_welcome_page(request):
     template = Template("".join(template_file.readlines()))
 
     context = RequestContext(request)
-    
+    form = DocumentForm()
     #get study:
     current_stage = None
     study = Study.objects.get(name="example_study")
@@ -237,7 +238,7 @@ def exs_welcome_page(request):
             current_stage = s
     
     context["current_stage"] = current_stage
-    
+    context["form"] = form
     return HttpResponse(template.render(context))
 
 
@@ -248,7 +249,7 @@ def exs_simple_task(request):
     template = Template("".join(template_file.readlines()))
 
     context = RequestContext(request)
-    
+    form = DocumentForm()
     #get study:
     current_stage = None
     study = Study.objects.get(name="example_study")
@@ -258,7 +259,7 @@ def exs_simple_task(request):
             current_stage = s
     
     context["current_stage"] = current_stage
-    
+    context["form"] = form
     return HttpResponse(template.render(context))
 
 
@@ -269,7 +270,7 @@ def exs_bye_page(request):
     template = Template("".join(template_file.readlines()))
 
     context = RequestContext(request)
-    
+    form = DocumentForm()
     #get study:
     current_stage = None
     study = Study.objects.get(name="example_study")
@@ -279,7 +280,7 @@ def exs_bye_page(request):
             current_stage = s
     
     context["current_stage"] = current_stage
-    
+    context["form"] = form
     return HttpResponse(template.render(context))
 
 
@@ -290,7 +291,7 @@ def java_check_java_check(request):
     template = Template("".join(template_file.readlines()))
 
     context = RequestContext(request)
-    
+    form = DocumentForm()
     #get study:
     current_stage = None
     study = Study.objects.get(name="java_check_study")
@@ -300,7 +301,7 @@ def java_check_java_check(request):
             current_stage = s
     
     context["current_stage"] = current_stage
-    
+    context["form"] = form
     return HttpResponse(template.render(context))
 
 
@@ -311,7 +312,7 @@ def reading_study_welcome_page(request):
     template = Template("".join(template_file.readlines()))
 
     context = RequestContext(request)
-    
+    form = DocumentForm()
     #get study:
     current_stage = None
     study = Study.objects.get(name="Technology Integration Practices in Academic Readers")
@@ -321,7 +322,7 @@ def reading_study_welcome_page(request):
             current_stage = s
     
     context["current_stage"] = current_stage
-    
+    context["form"] = form
     return HttpResponse(template.render(context))
 
 
@@ -332,7 +333,7 @@ def reading_study_simple_task(request):
     template = Template("".join(template_file.readlines()))
 
     context = RequestContext(request)
-    
+    form = DocumentForm()
     #get study:
     current_stage = None
     study = Study.objects.get(name="Technology Integration Practices in Academic Readers")
@@ -342,7 +343,7 @@ def reading_study_simple_task(request):
             current_stage = s
     
     context["current_stage"] = current_stage
-    
+    context["form"] = form
     return HttpResponse(template.render(context))
 
 
@@ -353,7 +354,7 @@ def reading_study_bye_page(request):
     template = Template("".join(template_file.readlines()))
 
     context = RequestContext(request)
-    
+    form = DocumentForm()
     #get study:
     current_stage = None
     study = Study.objects.get(name="Technology Integration Practices in Academic Readers")
@@ -363,7 +364,7 @@ def reading_study_bye_page(request):
             current_stage = s
     
     context["current_stage"] = current_stage
-    
+    context["form"] = form
     return HttpResponse(template.render(context))
 
 
@@ -374,7 +375,7 @@ def rmq_injury_prevention(request):
     template = Template("".join(template_file.readlines()))
 
     context = RequestContext(request)
-    
+    form = DocumentForm()
     #get study:
     current_stage = None
     study = Study.objects.get(name="rural_medicine_questionairre")
@@ -384,7 +385,7 @@ def rmq_injury_prevention(request):
             current_stage = s
     
     context["current_stage"] = current_stage
-    
+    context["form"] = form
     return HttpResponse(template.render(context))
 
 
@@ -395,7 +396,7 @@ def rmq_housing(request):
     template = Template("".join(template_file.readlines()))
 
     context = RequestContext(request)
-    
+    form = DocumentForm()
     #get study:
     current_stage = None
     study = Study.objects.get(name="rural_medicine_questionairre")
@@ -405,7 +406,7 @@ def rmq_housing(request):
             current_stage = s
     
     context["current_stage"] = current_stage
-    
+    context["form"] = form
     return HttpResponse(template.render(context))
 
 
@@ -416,7 +417,7 @@ def rmq_results(request):
     template = Template("".join(template_file.readlines()))
 
     context = RequestContext(request)
-    
+    form = DocumentForm()
     #get study:
     current_stage = None
     study = Study.objects.get(name="rural_medicine_questionairre")
@@ -426,7 +427,7 @@ def rmq_results(request):
             current_stage = s
     
     context["current_stage"] = current_stage
-    
+    context["form"] = form
     return HttpResponse(template.render(context))
 
 
@@ -437,7 +438,7 @@ def shi_welcome_page(request):
     template = Template("".join(template_file.readlines()))
 
     context = RequestContext(request)
-    
+    form = DocumentForm()
     #get study:
     current_stage = None
     study = Study.objects.get(name="shipley_vocabulary_test")
@@ -447,7 +448,7 @@ def shi_welcome_page(request):
             current_stage = s
     
     context["current_stage"] = current_stage
-    
+    context["form"] = form
     return HttpResponse(template.render(context))
 
 
@@ -458,7 +459,7 @@ def shi_test(request):
     template = Template("".join(template_file.readlines()))
 
     context = RequestContext(request)
-    
+    form = DocumentForm()
     #get study:
     current_stage = None
     study = Study.objects.get(name="shipley_vocabulary_test")
@@ -468,7 +469,7 @@ def shi_test(request):
             current_stage = s
     
     context["current_stage"] = current_stage
-    
+    context["form"] = form
     return HttpResponse(template.render(context))
 
 
@@ -479,7 +480,7 @@ def bog_boggle(request):
     template = Template("".join(template_file.readlines()))
 
     context = RequestContext(request)
-    
+    form = DocumentForm()
     #get study:
     current_stage = None
     study = Study.objects.get(name="simple_word_game_study")
@@ -489,7 +490,7 @@ def bog_boggle(request):
             current_stage = s
     
     context["current_stage"] = current_stage
-    
+    context["form"] = form
     return HttpResponse(template.render(context))
 
 
@@ -500,7 +501,7 @@ def bog_shipley(request):
     template = Template("".join(template_file.readlines()))
 
     context = RequestContext(request)
-    
+    form = DocumentForm()
     #get study:
     current_stage = None
     study = Study.objects.get(name="simple_word_game_study")
@@ -510,7 +511,7 @@ def bog_shipley(request):
             current_stage = s
     
     context["current_stage"] = current_stage
-    
+    context["form"] = form
     return HttpResponse(template.render(context))
 
 
@@ -521,7 +522,7 @@ def bog_consent(request):
     template = Template("".join(template_file.readlines()))
 
     context = RequestContext(request)
-    
+    form = DocumentForm()
     #get study:
     current_stage = None
     study = Study.objects.get(name="simple_word_game_study")
@@ -531,7 +532,7 @@ def bog_consent(request):
             current_stage = s
     
     context["current_stage"] = current_stage
-    
+    context["form"] = form
     return HttpResponse(template.render(context))
 
 
@@ -542,7 +543,7 @@ def space_fortress_java_check(request):
     template = Template("".join(template_file.readlines()))
 
     context = RequestContext(request)
-    
+    form = DocumentForm()
     #get study:
     current_stage = None
     study = Study.objects.get(name="space_fortress_study")
@@ -552,7 +553,7 @@ def space_fortress_java_check(request):
             current_stage = s
     
     context["current_stage"] = current_stage
-    
+    context["form"] = form
     return HttpResponse(template.render(context))
 
 
@@ -563,7 +564,7 @@ def space_fortress_space_fortress(request):
     template = Template("".join(template_file.readlines()))
 
     context = RequestContext(request)
-    
+    form = DocumentForm()
     #get study:
     current_stage = None
     study = Study.objects.get(name="space_fortress_study")
@@ -573,6 +574,6 @@ def space_fortress_space_fortress(request):
             current_stage = s
     
     context["current_stage"] = current_stage
-    
+    context["form"] = form
     return HttpResponse(template.render(context))
 
